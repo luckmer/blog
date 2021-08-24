@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const CONNECTION_URL = mongoose
+const CONNECTION_URL = ``;
+mongoose
   .connect(CONNECTION_URL, {
     useUnifiedTopology: true,
     useCreateIndex: true,
