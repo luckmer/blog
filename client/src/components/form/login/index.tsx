@@ -1,12 +1,19 @@
-import React, { createRef, useState, useEffect } from "react";
-import * as register from "../../../css/Register.css";
-import { FormPanel } from "../FormPanel";
-import { FillInterface, registrationInterface } from "../types/FillInterface";
+import React, { useState } from "react";
+import * as Type from "../types/FillInterface";
 import { Move, validateEmail, validatePassword } from "../../../constants";
+import { sagaActions } from "../../../redux/saga/sagaActions";
+import * as register from "../../../css/Register.css";
+import { CreateRefs } from "../../../hooks/index";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { FormPanel } from "../FormPanel";
 
 const Index = () => {
-  const [elRefs, setElRefs] = useState<HTMLFormElement[]>([]);
-  const [fillForm, setFillForm] = useState<FillInterface | undefined>(
+  const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
+  const state = Typed((state) => state.back.registration);
+
+  console.log(state);
+
+  const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
     undefined
   );
 
@@ -15,16 +22,11 @@ const Index = () => {
   const footerName: string = "register";
   const footerDesc: string = "You don't have an account?";
   const arrLength = registerTypes.length;
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    setElRefs((elRefs) =>
-      Array(arrLength)
-        .fill(null)
-        .map((_, i) => elRefs[i] || createRef<HTMLDivElement>())
-    );
-  }, [arrLength]);
+  const { elRefs } = CreateRefs(arrLength);
 
-  const createRegistration = (data: registrationInterface[]) => {
+  const createForm = (data: Type.registrationInterface[]) => {
     const [email, password] = data;
     const emailReq = validateEmail(email.value);
     const passwordReq = validatePassword(password.value);
@@ -48,15 +50,25 @@ const Index = () => {
       return { type: registerTypes[i], value: value };
     });
 
-    const registerResult = createRegistration(value);
+    const formData = createForm(value);
 
-    if (!registerResult.status) {
-      const statusForm: FillInterface = {
-        status: registerResult.status,
-        result: registerResult.result,
+    if (!formData.status) {
+      const statusForm: Type.FillInterface = {
+        status: formData.status,
+        result: formData.result,
       };
       setFillForm(statusForm);
     } else setFillForm(undefined);
+
+    if (formData.status) {
+      const data = formData.result;
+      dispatch({ type: sagaActions.LOGIN_USER, data });
+      setTimeout(() => {
+        elRefs.forEach((el) => {
+          el.current.value = "";
+        });
+      }, 100);
+    }
   };
 
   return (
@@ -73,6 +85,12 @@ const Index = () => {
           footerDesc,
           footerName,
           fillForm
+        )}
+        {(state.loginStatus !== null && !state.loginStatus) ||
+        state.loginStatus ? (
+          <span>{state.loginResult} </span>
+        ) : (
+          ""
         )}
       </register.MainPanel>
     </register.MainRegister>
