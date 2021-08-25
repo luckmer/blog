@@ -1,0 +1,6 @@
+export const sagaActions = {
+  REGISTER_USER: "REGISTER_USER",
+  LOGIN_USER: "LOGIN_USER",
+  USER_ONLINE: "USER_ONLINE",
+  LOG_OUT: "LOG_OUT",
+};
