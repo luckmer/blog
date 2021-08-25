@@ -10,3 +10,14 @@ export interface registrationInterface {
   type: string;
   value: string;
 }
+
+export interface RegisterState {
+  back: {
+    registration: {
+      registrationStatus: boolean;
+      registrationResult: string;
+      loginStatus: boolean;
+      loginResult: string;
+    };
+  };
+}
