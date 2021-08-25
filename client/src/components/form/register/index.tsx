@@ -1,12 +1,17 @@
-import React, { createRef, useState, useEffect } from "react";
-import * as register from "../../../css/Register.css";
-import { FormPanel } from "../FormPanel";
-import { FillInterface, registrationInterface } from "../types/FillInterface";
+import React, { useState } from "react";
+import * as Type from "../types/FillInterface";
 import { Move, validateEmail, validatePassword } from "../../../constants";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { sagaActions } from "../../../redux/saga/sagaActions";
+import * as register from "../../../css/Register.css";
+import { CreateRefs } from "../../../hooks/index";
+import { FormPanel } from "../FormPanel";
 
 const Index = () => {
-  const [elRefs, setElRefs] = useState<HTMLFormElement[]>([]);
-  const [fillForm, setFillForm] = useState<FillInterface | undefined>(
+  const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
+  const state = Typed((state) => state.back.registration);
+
+  const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
     undefined
   );
 
@@ -19,17 +24,13 @@ const Index = () => {
   const buttonName: string = "register";
   const footerName: string = "login";
   const footerDesc: string = "already have an account ?";
+  const dispatch = useDispatch();
 
   const arrLength = registerTypes.length;
-  useEffect(() => {
-    setElRefs((elRefs) =>
-      Array(arrLength)
-        .fill(null)
-        .map((_, i) => elRefs[i] || createRef<HTMLDivElement>())
-    );
-  }, [arrLength]);
 
-  const createRegistration = (data: registrationInterface[]) => {
+  const { elRefs } = CreateRefs(arrLength);
+
+  const createForm = (data: Type.registrationInterface[]) => {
     const [name, email, password, confirm] = data;
     const emailReq = validateEmail(email.value);
     const passwordReq = validatePassword(password.value);
@@ -42,7 +43,8 @@ const Index = () => {
       Move(confirm.value) &&
       emailReq &&
       passwordReq &&
-      confirmReq
+      confirmReq &&
+      password.value === confirm.value
     ) {
       const Json = {
         name: name.value,
@@ -50,11 +52,18 @@ const Index = () => {
         password: password.value,
         confirm: confirm.value,
       };
-
       return { status: true, result: Json };
-    } else if (!emailReq && !passwordReq) {
-      return { status: false, result: "please check your password or email" };
     } else {
+      if (!emailReq && !passwordReq) {
+        return { status: false, result: "please check your password or email" };
+      }
+
+      if (password.value !== confirm.value) {
+        return {
+          status: false,
+          result: "check password or confirm password",
+        };
+      }
       return {
         status: false,
         result:
@@ -71,22 +80,24 @@ const Index = () => {
       return { type: registerTypes[i], value: value };
     });
 
-    const registerResult = createRegistration(value);
+    const formData = createForm(value);
 
-    if (!registerResult.status) {
-      const statusForm: FillInterface = {
-        status: registerResult.status,
-        result: registerResult.result,
+    if (!formData.status) {
+      const statusForm: Type.FillInterface = {
+        status: formData.status,
+        result: formData.result,
       };
       setFillForm(statusForm);
     } else setFillForm(undefined);
 
-    if (registerResult.status) {
+    if (formData.status) {
+      const data = formData.result;
+      dispatch({ type: sagaActions.REGISTER_USER, data });
       setTimeout(() => {
         elRefs.forEach((el) => {
           el.current.value = "";
         });
-      });
+      }, 100);
     }
   };
 
@@ -104,6 +115,12 @@ const Index = () => {
           footerDesc,
           footerName,
           fillForm
+        )}
+        {(state.registrationStatus !== null && !state.registrationStatus) ||
+        state.registrationStatus ? (
+          <span>{state.registrationResult} </span>
+        ) : (
+          ""
         )}
       </register.MainPanel>
     </register.MainRegister>
