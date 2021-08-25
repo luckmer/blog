@@ -4,10 +4,12 @@ import {
   oAuthLogin,
   oAuthChangePassword,
   oAuthDeleteAccount,
+  User,
 } from "../controllers/oAuth.controllers";
 
 const router = express.Router();
 
+router.get("/user", User);
 router.post("/register", oAuthRegister);
 router.post("/login", oAuthLogin);
 router.put("/change", oAuthChangePassword);
