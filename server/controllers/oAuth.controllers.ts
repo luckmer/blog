@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import userAuth from "../models/userAuth.mongo";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
+import { validateEmail, validatePassword, createToken } from "../constants";
 
 const max = 3 * 24 * 60 * 60;
 const SALT = 12;
-const SECRET = 211534129078435750;
 
 const oAuthRegister = async (req: Request, res: Response) => {
   try {
@@ -48,6 +47,7 @@ const oAuthRegister = async (req: Request, res: Response) => {
                 name: name,
                 email: email,
                 password: hash,
+                avatar: "",
               })
               .then(() => {
                 res.json({
@@ -83,20 +83,26 @@ const oAuthLogin = (req: Request, res: Response) => {
     }
 
     if (email && password) {
-      userAuth.findOne({ email }).then((user) => {
+      userAuth.findOne({ email: email }).then((user) => {
         if (user) {
           const id = user._id;
           const token = createToken(id);
+
+          console.log(password, user.password, user);
           bcrypt.compare(password, user.password, (err, results) => {
+            console.log(err);
             if (results) {
               res.cookie("jwt", token, {
                 httpOnly: true,
                 maxAge: max * 1000,
               });
+              const { email, name, _id } = user;
+              const userResult = { email, name, _id };
 
               return res.status(201).json({
                 status: true,
                 result: "logged in",
+                UserData: userResult,
               });
             } else {
               return res.status(401).json({
@@ -120,17 +126,19 @@ interface JwtId {
   id: number;
 }
 
-export const User = async (req: Request, res: Response) => {
+const User = async (req: Request, res: Response) => {
   try {
     const cookie = req.cookies.jwt;
+
     if (cookie) {
+      console.log("request");
       const decode = jwt_decode<JwtId>(cookie);
       if (decode) {
         const decodedID = decode.id;
         const user = await userAuth.findById(decodedID);
         if (user) {
-          const { email, name } = user;
-          const userResult = { email, name };
+          const { email, name, _id } = user;
+          const userResult = { email, name, _id };
           return res.status(201).json({
             status: true,
             result: userResult,
@@ -143,12 +151,36 @@ export const User = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(501).json({
       status: false,
-      result: err,
+      result: err.message,
     });
   }
 };
 
-export const Logout = async (req: Request, res: Response) => {
+const getUserByID = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const user = await userAuth.findById(id);
+
+    if (user) {
+      const { _id, email, name } = user;
+
+      const userResult = { _id, email, name };
+
+      return res.status(201).json({
+        status: true,
+        result: userResult,
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      status: false,
+      result: err.message,
+    });
+  }
+};
+
+const Logout = async (req: Request, res: Response) => {
   try {
     res.clearCookie("jwt");
     return res.status(201).json({ status: false, result: "logged out " });
@@ -157,27 +189,4 @@ export const Logout = async (req: Request, res: Response) => {
   }
 };
 
-const oAuthChangePassword = (req: Request, res: Response) => {};
-
-const oAuthDeleteAccount = (req: Request, res: Response) => {};
-
-export { oAuthRegister, oAuthLogin, oAuthChangePassword, oAuthDeleteAccount };
-
-export const validateEmail = (email: string) => {
-  const req: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  return req.test(email);
-};
-
-export const validatePassword = (password: string) => {
-  const req: RegExp = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-  );
-
-  return req.test(password);
-};
-
-const createToken = (id: number) => {
-  return jwt.sign({ id }, SECRET.toString(), {
-    expiresIn: Math.floor(Date.now() / 1000) + 60 * 60,
-  });
-};
+export { oAuthRegister, oAuthLogin, Logout, getUserByID, User };
