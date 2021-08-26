@@ -14,7 +14,7 @@ export const FormPanel = (
 ) => {
   return (
     <Fragment>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <register.Form onSubmit={(e) => handleSubmit(e)}>
         {registerTypes.map((el, i) => {
           const ref: any = elRefs[i];
           return (
@@ -25,7 +25,7 @@ export const FormPanel = (
           );
         })}
         <register.FormSubmit type="submit">{buttonName}</register.FormSubmit>
-      </form>
+      </register.Form>
       <register.Footer>
         <p>{footerDesc}</p>
         <Link to={footerName}>
