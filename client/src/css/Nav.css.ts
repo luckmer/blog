@@ -21,6 +21,7 @@ export const Ul = styled.ul`
   text-transform: uppercase;
   padding: 0 10px;
   cursor: pointer;
+  display: flex;
   user-select: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -28,6 +29,7 @@ export const Ul = styled.ul`
   -ms-user-select: none;
 
   a {
+    padding: 10px;
     &:nth-child(1) {
       text-transform: none;
     }
@@ -73,4 +75,13 @@ export const Input = styled.input`
     outline: none;
     width: 100%;
   }
+`;
+
+export const NAVIMG = styled.img`
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  transform: translateY(-3px);
+  border-radius: 50%;
+  background-color: #fff;
 `;
