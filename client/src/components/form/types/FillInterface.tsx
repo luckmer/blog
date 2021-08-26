@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface FillInterface {
   status: boolean;
   result:
@@ -13,6 +15,7 @@ export interface registrationInterface {
 
 export interface RegisterState {
   back: {
+    userStatus: boolean | null;
     registration: {
       registrationStatus: boolean;
       registrationResult: string;
@@ -21,3 +24,20 @@ export interface RegisterState {
     };
   };
 }
+
+export interface CHECKPROPS {
+  ID: string | number | any;
+}
+
+export interface ProfileState {
+  back: {
+    registration: {
+      PasswordResult: string;
+      PasswordStatus: boolean;
+    };
+  };
+}
+
+export type InputChange = ChangeEvent<
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+>;
