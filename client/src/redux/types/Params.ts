@@ -1,6 +1,16 @@
 export interface Params {
-  data: string;
+  data: {
+    data: {
+      confirm: string;
+      email: string;
+      name: string;
+      password: string;
+    };
+    id: string;
+  };
+
   type: string;
+  ID: string;
   response: {
     confirm: string;
     email: string;
