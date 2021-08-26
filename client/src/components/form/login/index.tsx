@@ -6,12 +6,12 @@ import * as register from "../../../css/Register.css";
 import { CreateRefs } from "../../../hooks/index";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { FormPanel } from "../FormPanel";
+import { useHistory } from "react-router";
 
 const Index = () => {
   const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
   const state = Typed((state) => state.back.registration);
-
-  console.log(state);
+  const history = useHistory();
 
   const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
     undefined
@@ -67,6 +67,7 @@ const Index = () => {
         elRefs.forEach((el) => {
           el.current.value = "";
         });
+        history.push("/");
       }, 100);
     }
   };
