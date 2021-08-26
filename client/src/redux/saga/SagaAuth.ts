@@ -1,5 +1,5 @@
+import { userData } from "./../services/Authenticate";
 import { put, call, takeLatest, takeEvery } from "redux-saga/effects";
-import { registerAuth, loginAuth, userData } from "../services/Authenticate";
 import { sagaActions } from "./sagaActions";
 import { Params } from "../types/Params";
 import {
@@ -7,14 +7,17 @@ import {
   loginStatus,
   onlineUser,
 } from "../reducers/registerReducer";
-
-const { REGISTER_USER, LOGIN_USER, USER_ONLINE } = sagaActions;
+import { registerAuth, loginAuth } from "../services/Authenticate";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 interface ResponseGenerator {
   result: string;
   status: boolean;
+  title: string;
+  UserData: {
+    email: string;
+  };
 }
 
 function* registerSaga(payload: Params) {
@@ -38,27 +41,37 @@ function* loginSaga(payload: Params) {
 
     delay(1000);
     yield put(
-      loginStatus({ result: response.result, status: response.status })
+      loginStatus({
+        result: response.result,
+        status: response.status,
+        Data: response.UserData,
+      })
     );
   } catch (err) {
     yield put(loginStatus({ result: err, status: false }));
   }
 }
 
+function logoutSaga() {}
+
 function* userOnline() {
   try {
     const response: ResponseGenerator = yield call(userData);
-    delay(1000);
-    yield put(onlineUser({ result: response.result, status: response.status }));
+    if (response) {
+      yield put(
+        onlineUser({ result: response.result, status: response.status })
+      );
+    }
   } catch (err) {
     yield put(onlineUser({ result: err, status: false }));
   }
 }
 
 function* SagaAuth() {
-  yield takeLatest(REGISTER_USER, registerSaga);
-  yield takeLatest(LOGIN_USER, loginSaga);
-  yield takeEvery(USER_ONLINE, userOnline);
+  yield takeLatest(sagaActions.REGISTER_USER, registerSaga);
+  yield takeLatest(sagaActions.LOGIN_USER, loginSaga);
+  yield takeLatest(sagaActions.LOGOUT_USER, logoutSaga);
+  yield takeEvery(sagaActions.USER_ONLINE, userOnline);
 }
 
 export default SagaAuth;
