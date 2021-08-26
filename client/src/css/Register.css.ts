@@ -9,6 +9,9 @@ export const MainRegister = styled.section`
   padding-top: 90px;
   flex-direction: column;
 `;
+export const Form = styled.form`
+  width: 100%;
+`;
 
 export const MainPanel = styled.div`
   height: auto;
