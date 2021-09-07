@@ -32,8 +32,16 @@ export interface CHECKPROPS {
 export interface ProfileState {
   back: {
     registration: {
+      avatar: string;
       PasswordResult: string;
       PasswordStatus: boolean;
+      userStatus: boolean;
+      userData: {
+        avatar: string;
+        email: string;
+        _id: string;
+        name: string;
+      };
     };
   };
 }
