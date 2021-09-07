@@ -6,11 +6,13 @@ import { useSelector, TypedUseSelectorHook } from "react-redux";
 interface NavBarState {
   back: {
     registration: {
+      avatar: string;
       userStatus: boolean;
       userData: {
         email: string;
         name: string;
         _id: string;
+        avatar: string;
       };
     };
   };
@@ -18,11 +20,13 @@ interface NavBarState {
 
 interface postState {
   id: string;
+  avatar: string;
 }
 
 const Index = () => {
   const Typed: TypedUseSelectorHook<NavBarState> = useSelector;
   const state = Typed((state) => state.back.registration);
+  const user = Typed((state) => state.back.registration.avatar);
 
   const id = state.userData?._id;
 
@@ -41,7 +45,7 @@ const Index = () => {
           <nav.Input placeholder="search content" />
         </nav.NavSpacer>
         <nav.NavSpacer>
-          {id ? <PostGenerator id={id} /> : <LoginPanel />}
+          {id ? <PostGenerator id={id} avatar={user} /> : <LoginPanel />}
         </nav.NavSpacer>
       </nav.NavContent>
     </nav.Nav>
@@ -50,7 +54,7 @@ const Index = () => {
 
 export default Index;
 
-const PostGenerator = ({ id }: postState) => {
+const PostGenerator = ({ id, avatar }: postState) => {
   return (
     <Fragment>
       <nav.Ul>
@@ -58,7 +62,7 @@ const PostGenerator = ({ id }: postState) => {
           <li>Create Post</li>
         </Link>
         <Link to={`/profile/${id}?id=${id}&check=`}>
-          <nav.NAVIMG src=" " alt="" />
+          <nav.NAVIMG src={avatar} alt="" />
         </Link>
       </nav.Ul>
     </Fragment>
