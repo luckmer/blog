@@ -65,7 +65,9 @@ const Index = () => {
       dispatch({ type: sagaActions.LOGIN_USER, data });
       setTimeout(() => {
         elRefs.forEach((el) => {
-          el.current.value = "";
+          if (el.current) {
+            el.current.value = "";
+          }
         });
         history.push("/");
       }, 100);
