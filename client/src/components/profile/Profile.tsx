@@ -1,19 +1,10 @@
+import * as Constants from "../Constants/Constants";
 import { FormPanel } from "../form/FormPanel";
 import * as P from "../../css/Profile.css";
 import Firmware from "./firmware";
-import * as Constants from "./Constants";
 
 const Profile = () => {
-  const {
-    handleChangeImg,
-    handleLogout,
-    handleSubmit,
-    flag,
-    fillForm,
-    user,
-    elRefs,
-    state,
-  } = Firmware();
+  const firmware = Firmware();
 
   return (
     <P.ProfileMain>
@@ -21,7 +12,7 @@ const Profile = () => {
         <P.UserPanel>
           <P.UserData>
             <P.IMG>
-              <img src={user ? user : " "} alt="" />
+              <img src={firmware.user ? firmware.user : " "} alt="" />
               <div>
                 <span>
                   <label htmlFor="file_up">Import</label>
@@ -31,24 +22,26 @@ const Profile = () => {
                     name="file"
                     id="file_up"
                     style={{ display: "none" }}
-                    onChange={handleChangeImg}
+                    onChange={firmware.handleChangeImg}
                   />
                 </span>
               </div>
             </P.IMG>
             {FormPanel(
               Constants.registerTypes,
-              handleSubmit,
-              elRefs,
+              firmware.handleSubmit,
+              firmware.elRefs,
               Constants.buttonName,
               Constants.footerDesc,
               Constants.footerName,
-              fillForm
+              firmware.fillForm
             )}
-            <div>{flag ? <p>{state.PasswordResult}</p> : ""}</div>
+            <div>
+              {firmware.flag ? <p>{firmware.state.PasswordResult}</p> : ""}
+            </div>
           </P.UserData>
           <P.Logout>
-            <P.Btn onClick={handleLogout}>Logout</P.Btn>
+            <P.Btn onClick={firmware.handleLogout}>Logout</P.Btn>
           </P.Logout>
         </P.UserPanel>
       </P.ProfileSpacer>
