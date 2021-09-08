@@ -1,4 +1,4 @@
-import * as Constants from "../Constants/Constants";
+import * as Constants from "../Types/Constants";
 import { FormPanel } from "../form/FormPanel";
 import * as P from "../../css/Profile.css";
 import Firmware from "./firmware";

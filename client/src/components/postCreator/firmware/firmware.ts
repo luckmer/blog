@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
-import { ErrorObj, InputChange } from "../Constants/Types";
-import { sagaActions } from "../../redux/saga/sagaActions";
+import { useState, useCallback, useMemo } from "react";
+import { ErrorObj, InputChange } from "../../Types/Types";
+import { sagaActions } from "../../../redux/saga/sagaActions";
 import { useDispatch } from "react-redux";
-import ApiImg from "../../api/ImgApi";
+import ApiImg from "../../../api/ImgApi";
 
 interface TextState {
   [key: string]: string;
@@ -18,7 +18,10 @@ const Firmware = () => {
     category: "",
   });
   const dispatch = useDispatch();
-  const types: string[] = ["header", "description", "category"];
+  const types: string[] = useMemo(
+    () => ["header", "description", "category"],
+    []
+  );
 
   const ImagePreview = useCallback(async (e: InputChange) => {
     const target = e.target as HTMLInputElement;

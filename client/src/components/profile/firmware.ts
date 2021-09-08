@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import { sagaActions } from "../../redux/saga/sagaActions";
 import { CreateRefs, CreateForm } from "../../hooks/index";
-import * as Type from "../form/types/FillInterface";
+import * as Constants from "../Types/Constants";
+import * as Type from "../Types/FillInterface";
 import { useHistory } from "react-router";
-import * as Constants from "../Constants/Constants";
 import ApiImg from "../../api/ImgApi";
 
 const Firmware = () => {
@@ -19,7 +19,7 @@ const Firmware = () => {
   };
 
   const state = Typed((state) => state.back.registration);
-  const user = Typed((state) => state.back.registration.avatar);
+  const user = Typed((state) => state.back.registration?.avatar);
   const { elRefs } = CreateRefs(Constants.arrLength);
 
   const history = useHistory();
@@ -78,7 +78,10 @@ const Firmware = () => {
     }
   };
 
-  const handleLogout = () => dispatch({ type: sagaActions.LOGOUT_USER });
+  const handleLogout = () => {
+    dispatch({ type: sagaActions.LOGOUT_USER });
+    history.push("/login");
+  };
 
   useEffect(() => {
     if (state.PasswordStatus) {
@@ -94,10 +97,10 @@ const Firmware = () => {
   }, [ID, dispatch]);
 
   useEffect(() => {
-    if (!state.userStatus && state.userStatus !== null) {
-      history.push("/login");
-    }
-  }, [history, state.userStatus]);
+    const user = state.userData;
+
+    if (!user || !user["avatar"]) history.push("/");
+  }, [state.userData, history, state]);
 
   return {
     handleChangeImg,

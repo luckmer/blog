@@ -1,32 +1,30 @@
 import React, { useState } from "react";
-import * as Type from "../types/FillInterface";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { CreateRefs, CreateForm } from "../../../hooks/index";
 import { sagaActions } from "../../../redux/saga/sagaActions";
 import * as register from "../../../css/Register.css";
-import { CreateRefs, CreateForm } from "../../../hooks/index";
+import * as Type from "../../Types/FillInterface";
 import { FormPanel } from "../FormPanel";
 
 const Index = () => {
   const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
   const state = Typed((state) => state.back.registration);
-
   const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
     undefined
   );
 
+  const footerDesc: string = "already have an account ?";
+  const buttonName: string = "register";
+  const footerName: string = "login";
   const registerTypes: string[] = [
     "Name",
     "Email",
     "Password",
     "Confirm Password",
   ];
-  const buttonName: string = "register";
-  const footerName: string = "login";
-  const footerDesc: string = "already have an account ?";
+
   const dispatch = useDispatch();
-
   const arrLength = registerTypes.length;
-
   const { elRefs } = CreateRefs(arrLength);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,24 +37,23 @@ const Index = () => {
 
     const formData = CreateForm(value);
 
-    if (!formData.status) {
-      const statusForm: Type.FillInterface = {
-        status: formData.status,
-        result: formData.result,
-      };
-      setFillForm(statusForm);
-    } else setFillForm(undefined);
+    const statusForm: Type.FillInterface = {
+      status: formData.status,
+      result: formData.result,
+    };
+
+    !formData.status ? setFillForm(statusForm) : setFillForm(undefined);
 
     if (formData.status) {
       const data = formData.result;
       dispatch({ type: sagaActions.REGISTER_USER, data });
-      setTimeout(() => {
-        elRefs.forEach((el) => {
-          if (el.current) {
-            el.current.value = "";
-          }
-        });
-      }, 100);
+      setTimeout(
+        () =>
+          elRefs.forEach((el) => {
+            if (el.current) el.current.value = "";
+          }),
+        100
+      );
     }
   };
 

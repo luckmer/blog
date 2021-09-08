@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import * as nav from "../../css/Nav.css";
-import { postState } from "../Constants/NavBarState";
+import { postState } from "../Types/NavBarState";
 
 export const PostGenerator = ({ id, avatar }: postState) => {
   return (
