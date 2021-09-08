@@ -18,3 +18,18 @@ export interface Params {
     password: string;
   };
 }
+
+export interface DataS {
+  confirm: string;
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface AvatarState {
+  type: string;
+  updateFiles: {
+    file: File;
+    ID: any;
+  };
+}
