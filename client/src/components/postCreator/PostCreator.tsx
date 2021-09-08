@@ -1,7 +1,7 @@
 import { memo, useMemo } from "react";
 import * as Small from "../../css/PostCreator.css";
+import Firmware from "./firmware/firmware";
 import { PostForm, PreviewPost } from ".";
-import Firmware from "./firmware";
 
 const PostCreator = () => {
   const firmware = Firmware();

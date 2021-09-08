@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import * as Type from "../types/FillInterface";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { Move, validateEmail, validatePassword } from "../../../constants";
 import { sagaActions } from "../../../redux/saga/sagaActions";
 import * as register from "../../../css/Register.css";
 import { CreateRefs } from "../../../hooks/index";
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-import { FormPanel } from "../FormPanel";
+import * as Type from "../../Types/FillInterface";
 import { useHistory } from "react-router";
+import { FormPanel } from "../FormPanel";
 
 const Index = () => {
+  const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
+    undefined
+  );
   const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
   const state = Typed((state) => state.back.registration);
   const history = useHistory();
 
-  const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
-    undefined
-  );
-
   const registerTypes: string[] = ["Email", "Password"];
-  const buttonName: string = "Login";
-  const footerName: string = "register";
   const footerDesc: string = "You don't have an account?";
+  const footerName: string = "register";
+  const buttonName: string = "Login";
   const arrLength = registerTypes.length;
+
   const dispatch = useDispatch();
 
   const { elRefs } = CreateRefs(arrLength);
@@ -52,22 +52,19 @@ const Index = () => {
 
     const formData = createForm(value);
 
-    if (!formData.status) {
-      const statusForm: Type.FillInterface = {
-        status: formData.status,
-        result: formData.result,
-      };
-      setFillForm(statusForm);
-    } else setFillForm(undefined);
+    const statusForm: Type.FillInterface = {
+      status: formData.status,
+      result: formData.result,
+    };
+
+    !formData.status ? setFillForm(statusForm) : setFillForm(undefined);
 
     if (formData.status) {
       const data = formData.result;
       dispatch({ type: sagaActions.LOGIN_USER, data });
       setTimeout(() => {
         elRefs.forEach((el) => {
-          if (el.current) {
-            el.current.value = "";
-          }
+          if (el.current) el.current.value = "";
         });
         history.push("/");
       }, 100);

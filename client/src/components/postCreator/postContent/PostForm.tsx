@@ -1,6 +1,6 @@
-import * as Small from "../../css/PostCreator.css";
+import * as Small from "../../../css/PostCreator.css";
 import { SmallDesc } from "./ShortText";
-import { InputChange, ErrorObj } from "../Constants/Types";
+import { InputChange, ErrorObj } from "../../Types/Types";
 interface TextState {
   [key: string]: string;
 }

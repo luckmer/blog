@@ -32,6 +32,7 @@ export interface CHECKPROPS {
 export interface ProfileState {
   back: {
     registration: {
+      loginStatus: string;
       avatar: string;
       PasswordResult: string;
       PasswordStatus: boolean;

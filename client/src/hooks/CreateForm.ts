@@ -1,4 +1,4 @@
-import * as Type from "../components/form/types/FillInterface";
+import * as Type from "../components/Types/FillInterface";
 import { Move, validateEmail, validatePassword } from "../constants";
 
 const CreateForm = (data: Type.registrationInterface[]) => {

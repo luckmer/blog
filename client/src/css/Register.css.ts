@@ -13,6 +13,12 @@ export const Form = styled.form`
   width: 100%;
 `;
 
+export const Small = styled.small`
+  color: #7f82cf;
+  opacity: 0.8;
+  font-weight: bold;
+`;
+
 export const MainPanel = styled.div`
   height: auto;
   border: 1px solid #ddd;
