@@ -84,20 +84,19 @@ const oAuthLogin = (req: Request, res: Response) => {
 
     if (email && password) {
       userAuth.findOne({ email: email }).then((user) => {
-        if (user) {
-          const id = user._id;
+        const User: any = user;
+        if (User) {
+          const id = User._id;
           const token = createToken(id);
 
-          console.log(password, user.password, user);
-          bcrypt.compare(password, user.password, (err, results) => {
-            console.log(err);
+          bcrypt.compare(password, User.password, (err, results) => {
             if (results) {
               res.cookie("jwt", token, {
                 httpOnly: true,
                 maxAge: max * 1000,
               });
-              const { email, name, _id } = user;
-              const userResult = { email, name, _id };
+              const { email, name, _id, avatar } = User;
+              const userResult = { email, name, _id, avatar };
 
               return res.status(201).json({
                 status: true,
@@ -131,14 +130,14 @@ const User = async (req: Request, res: Response) => {
     const cookie = req.cookies.jwt;
 
     if (cookie) {
-      console.log("request");
       const decode = jwt_decode<JwtId>(cookie);
       if (decode) {
         const decodedID = decode.id;
-        const user = await userAuth.findById(decodedID);
+        const user: any = await userAuth.findById(decodedID);
         if (user) {
-          const { email, name, _id } = user;
-          const userResult = { email, name, _id };
+          const { email, name, _id, avatar } = user;
+          const userResult = { email, name, _id, avatar };
+
           return res.status(201).json({
             status: true,
             result: userResult,

@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 import { Request, Response } from "express";
 import userAuth from "../models/userAuth.mongo";
 import bcrypt from "bcrypt";
@@ -20,8 +21,25 @@ const oAuthUpdateProfile = async (req: Request, res: Response) => {
   }
 };
 
-const oAuthUpdateAvatar = (req: Request, res: Response) => {
-  console.log("request");
+interface MulterRequest extends Request {
+  file: any;
+}
+
+const oAuthUpdateAvatar = async (req: Request, res: Response) => {
+  try {
+    const { ID, url } = req.body;
+
+    await userAuth.findOneAndUpdate({ _id: ID }, { avatar: url });
+    return res.status(201).json({
+      status: true,
+      result: url,
+    });
+  } catch (err) {
+    return res.status(501).json({
+      status: false,
+      result: err.message,
+    });
+  }
 };
 
 const oAuthDeleteAccount = (req: Request, res: Response) => {};
