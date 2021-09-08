@@ -9,6 +9,7 @@ interface InitialInterface {
   loginResult: string;
   PasswordStatus: boolean;
   PasswordResult: string;
+  avatar: string;
 }
 
 const initialState: InitialInterface = {
@@ -20,6 +21,7 @@ const initialState: InitialInterface = {
   loginResult: "",
   PasswordStatus: false,
   PasswordResult: "",
+  avatar: "",
 };
 
 const RegisterReducer = createSlice({
@@ -34,12 +36,17 @@ const RegisterReducer = createSlice({
     },
 
     loginStatus: (state, action) => {
-      console.log(action.payload);
       const { status, result, Data } = action.payload;
       state.loginStatus = status;
       state.loginResult = result;
 
       state.userData = Data;
+      state.avatar = Data.avatar;
+    },
+
+    setAvatarView: (state, action) => {
+      const { avatar } = action.payload;
+      state.avatar = avatar;
     },
 
     UpdateStatus: (state, action) => {
@@ -50,15 +57,22 @@ const RegisterReducer = createSlice({
 
     onlineUser: (state, action) => {
       const { status, result } = action.payload;
+
       state.userStatus = status;
       if (result) {
+        state.avatar = result.avatar;
         state.userData = result;
       }
     },
   },
 });
 
-export const { registrationStatus, loginStatus, onlineUser, UpdateStatus } =
-  RegisterReducer.actions;
+export const {
+  registrationStatus,
+  loginStatus,
+  onlineUser,
+  UpdateStatus,
+  setAvatarView,
+} = RegisterReducer.actions;
 
 export default RegisterReducer.reducer;
