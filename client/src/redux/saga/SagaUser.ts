@@ -1,20 +1,15 @@
+import { delay } from "./../constants/delay";
+import { setAvatarView, UpdateStatus } from "../reducers/registerReducer";
+import { ResponseGenerator } from "../types/ResponseGenerator";
 import { put, call, takeLatest } from "redux-saga/effects";
 import { UserDataById } from "../reducers/UserReducer";
-import { Params } from "../types/Params";
+import { AvatarState, Params } from "../types/Params";
 import { sagaActions } from "./sagaActions";
-import { UpdateStatus } from "../reducers/registerReducer";
-import { fetchByUserId, fetchUserUpdate } from "../services/Authenticate";
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-interface ResponseGenerator {
-  result: string;
-  status: boolean;
-  title: string;
-  UserData: {
-    email: string;
-  };
-}
+import {
+  fetchByUserId,
+  fetchUserUpdate,
+  fetchUserAvatar,
+} from "../services/Authenticate";
 
 function* userByID(payload: Params) {
   try {
@@ -28,7 +23,6 @@ function* userByID(payload: Params) {
   }
 }
 
-//connect
 function* updateUser(payload: Params) {
   try {
     const response: ResponseGenerator = yield call(fetchUserUpdate, payload);
@@ -39,7 +33,15 @@ function* updateUser(payload: Params) {
   }
 }
 
-function* updateAvatar(payload: Params) {}
+function* updateAvatar(payload: AvatarState) {
+  try {
+    const response: ResponseGenerator = yield call(fetchUserAvatar, payload);
+
+    yield put(setAvatarView({ avatar: response.result }));
+  } catch (err) {
+    yield put(UpdateStatus({ status: false }));
+  }
+}
 
 function* SagaUser() {
   yield takeLatest(sagaActions.UPDATE_USER, updateUser);

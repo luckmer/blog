@@ -1,4 +1,5 @@
 import { Params } from "../types/Params";
+import { globalPostParameter, globalPutParameter } from "./constants";
 
 export const registerAuth = (request: Params) => {
   const data = request;
@@ -19,9 +20,10 @@ export const loginAuth = (request: Params) => {
 };
 
 export const userData = () => {
-  return fetch("/user/user")
-    .then((res) => res.json())
-    .then((json) => json);
+  const user = fetch("/user/user");
+  if (user) {
+    return user.then((res) => res.json()).then((json) => json);
+  }
 };
 
 export const fetchByUserId = (id: string) => {
@@ -33,29 +35,27 @@ export const fetchByUserId = (id: string) => {
 export const fetchUserUpdate = (request: Params) => {
   const data = request;
   const dataId = data.data.id;
-  const parameters = globalPutParameter(data);
+  const dataResult = data.data.data;
+
+  const parameters = globalPutParameter(dataResult);
 
   return fetch(`/user/change/${dataId}`, parameters)
     .then((response) => response.json())
     .then((json) => json);
 };
 
-const globalPostParameter = (data: Params) => {
-  return {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data.data),
-  };
+export const fetchUserAvatar = (request: any) => {
+  const data = request.updateFiles;
+
+  const parameters = globalPutParameter(data);
+
+  return fetch(`/user/avatar`, parameters)
+    .then((response) => response.json())
+    .then((json) => json);
 };
 
-const globalPutParameter = (data: Params) => {
-  return {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data.data.data),
-  };
+export const logoutAuth = () => {
+  return fetch("/user/logout")
+    .then((res) => res.json())
+    .then((json) => json);
 };
