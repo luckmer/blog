@@ -19,10 +19,10 @@ router.get("/user", User);
 router.get("/users/:id", getUserByID);
 router.post("/register", oAuthRegister);
 router.post("/login", oAuthLogin);
-router.delete("/logout", Logout); //off
+router.get("/logout", Logout);
 
 router.put("/change/:id", oAuthUpdateProfile);
 router.delete("/delete", oAuthDeleteAccount);
-router.put("/avatar/:id", oAuthUpdateAvatar); // off
+router.put("/avatar", oAuthUpdateAvatar); // off
 
 export default router;
