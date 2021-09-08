@@ -1,4 +1,5 @@
 import { userData } from "./../services/Authenticate";
+import { registerAuth, loginAuth, logoutAuth } from "../services/Authenticate";
 import { put, call, takeLatest, takeEvery } from "redux-saga/effects";
 import { sagaActions } from "./sagaActions";
 import { Params } from "../types/Params";
@@ -7,18 +8,8 @@ import {
   loginStatus,
   onlineUser,
 } from "../reducers/registerReducer";
-import { registerAuth, loginAuth } from "../services/Authenticate";
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-interface ResponseGenerator {
-  result: string;
-  status: boolean;
-  title: string;
-  UserData: {
-    email: string;
-  };
-}
+import { delay } from "../constants/delay";
+import { ResponseGenerator } from "../types/ResponseGenerator";
 
 function* registerSaga(payload: Params) {
   try {
@@ -52,7 +43,15 @@ function* loginSaga(payload: Params) {
   }
 }
 
-function logoutSaga() {}
+function* logoutSaga() {
+  try {
+    const response: ResponseGenerator = yield call(logoutAuth);
+
+    yield put(loginStatus({ result: "", status: response.status }));
+  } catch (err) {
+    yield put(loginStatus({ result: err, status: false }));
+  }
+}
 
 function* userOnline() {
   try {
