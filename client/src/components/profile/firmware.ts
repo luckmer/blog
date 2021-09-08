@@ -4,7 +4,7 @@ import { sagaActions } from "../../redux/saga/sagaActions";
 import { CreateRefs, CreateForm } from "../../hooks/index";
 import * as Type from "../form/types/FillInterface";
 import { useHistory } from "react-router";
-import * as Constants from "./Constants";
+import * as Constants from "../Constants/Constants";
 import ApiImg from "../../api/ImgApi";
 
 const Firmware = () => {
