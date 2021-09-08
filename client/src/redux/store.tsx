@@ -4,7 +4,10 @@ import createSagaMiddleware from "redux-saga";
 import Saga from "./saga/Index";
 
 const sagaMiddleware = createSagaMiddleware();
-const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+const middleware = [
+  ...getDefaultMiddleware({ thunk: false, serializableCheck: false }),
+  sagaMiddleware,
+];
 
 const store = configureStore({
   reducer: {
