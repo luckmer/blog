@@ -27,6 +27,7 @@ const Firmware = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const value = elRefs.map((el, i) => {
       const value: string = el.current.value;
       return { type: Constants.registerTypes[i], value: value };
@@ -98,9 +99,11 @@ const Firmware = () => {
 
   useEffect(() => {
     const user = state.userData;
-
-    if (!user || !user["avatar"]) history.push("/");
+    if (!user || !user.email || !user.name) history.push("/");
   }, [state.userData, history, state]);
+
+  const registerTypes = ["Name", "Email", "Password", "Confirm Password"];
+  const descriptions = ["modify password", "modify data"];
 
   return {
     handleChangeImg,
@@ -111,6 +114,8 @@ const Firmware = () => {
     user,
     elRefs,
     state,
+    registerTypes,
+    descriptions,
   };
 };
 export default Firmware;
