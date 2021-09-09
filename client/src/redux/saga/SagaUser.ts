@@ -29,7 +29,7 @@ function* updateUser(payload: Params) {
 
     yield put(UpdateStatus({ status: true, result: response.result }));
   } catch (err) {
-    yield put(UpdateStatus({ status: false }));
+    yield put(UpdateStatus({ status: false, result: "update failed" }));
   }
 }
 

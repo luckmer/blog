@@ -1,4 +1,3 @@
-import jwt_decode from "jwt-decode";
 import { Request, Response } from "express";
 import userAuth from "../models/userAuth.mongo";
 import bcrypt from "bcrypt";
@@ -8,22 +7,29 @@ const SALT = 12;
 const oAuthUpdateProfile = async (req: Request, res: Response) => {
   try {
     const { password, name, email } = req.body;
-    const passwordHash = await bcrypt.hash(password, SALT);
 
-    await userAuth.findOneAndUpdate(
-      { _id: req.params.id },
-      { name: name, email: email, password: passwordHash }
-    );
+    if (password) {
+      const passwordHash = await bcrypt.hash(password, SALT);
+      await userAuth.findOneAndUpdate(
+        { _id: req.params.id },
+        { password: passwordHash }
+      );
+    }
+
+    if (name && email) {
+      await userAuth.findOneAndUpdate(
+        { _id: req.params.id },
+        { name: name, email: email }
+      );
+    }
 
     return res.json({ status: true, result: "account updated" });
-  } catch (err: any) {
-    return res.status(500).json({ status: false, result: err.message });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ status: false, result: "email already in use" });
   }
 };
-
-interface MulterRequest extends Request {
-  file: any;
-}
 
 const oAuthUpdateAvatar = async (req: Request, res: Response) => {
   try {
@@ -35,9 +41,9 @@ const oAuthUpdateAvatar = async (req: Request, res: Response) => {
       result: url,
     });
   } catch (err) {
-    return res.status(501).json({
+    return res.status(500).json({
       status: false,
-      result: err.message,
+      result: "failed to update avatar",
     });
   }
 };
