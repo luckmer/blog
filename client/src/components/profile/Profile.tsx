@@ -28,13 +28,15 @@ const Profile = () => {
               </div>
             </P.IMG>
             {FormPanel(
-              Constants.registerTypes,
+              firmware.descriptions,
+              firmware.registerTypes,
               firmware.handleSubmit,
               firmware.elRefs,
               Constants.buttonName,
               Constants.footerDesc,
               Constants.footerName,
-              firmware.fillForm
+              firmware.fillForm,
+              2
             )}
             <div>
               {firmware.flag ? <p>{firmware.state.PasswordResult}</p> : ""}
