@@ -1,6 +1,7 @@
-import { sagaActions } from "./sagaActions";
+import { createPostUser } from "./../services/PostApi";
 import { takeLatest, put, call } from "redux-saga/effects";
 import { delay } from "./../constants/delay";
+import { sagaActions } from "./sagaActions";
 
 interface Params {
   type: string;
@@ -10,9 +11,25 @@ interface Params {
   };
 }
 
+interface ResponseState {
+  result: string;
+  status: boolean;
+  title: string;
+  createPost: {
+    [key: string]: string;
+  };
+}
+
+interface Test {
+  [key: string]: string;
+}
+
 function* createUserPost(payload: Params) {
   try {
-    console.log(payload.createPost);
+    const request: Test = payload.createPost;
+    const response: ResponseState = yield call(createPostUser, request);
+
+    delay(1000);
   } catch (err) {}
 }
 
