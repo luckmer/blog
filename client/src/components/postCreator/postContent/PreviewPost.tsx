@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import * as Small from "../../../css/PostCreator.css";
 import { ShortText } from "./ShortText";
 import { PreviewState } from "../../Types/Types";
+import Calendar from "../../Calendar";
 
 const PreviewPost = ({ imgPreview, header, description }: PreviewState) => {
   const shortHeader = useMemo(
@@ -16,6 +17,8 @@ const PreviewPost = ({ imgPreview, header, description }: PreviewState) => {
 
   return (
     <Small.PreviewPanel>
+      <Calendar />
+
       <Small.IMGPreview>
         {typeof imgPreview === "object" ? (
           <img src={URL.createObjectURL(imgPreview)} alt="" />
