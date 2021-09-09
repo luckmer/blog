@@ -19,6 +19,17 @@ export const Small = styled.small`
   font-weight: bold;
 `;
 
+export const PHeader = styled.p`
+  color: #00575b;
+  opacity: 0.8;
+  font-family: "Inter", sans-serif;
+  line-height: 1.334;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #00575b;
+`;
+
 export const MainPanel = styled.div`
   height: auto;
   border: 1px solid #ddd;
