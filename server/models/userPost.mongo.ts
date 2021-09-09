@@ -1,38 +1,55 @@
 import mongoose from "mongoose";
 
 interface blogInterface {
-  useR: string;
-  title: string;
-  content: string;
-  link: string;
+  image: string;
+  header: string;
+  description: string;
+  category: string;
+  day: string;
+  user: string;
+  id: string;
 }
 
-const PostSchema = new mongoose.Schema({
-  user: {
-    type: String,
-    ref: "user",
+const PostSchema = new mongoose.Schema(
+  {
+    image: {
+      type: String,
+      require: true,
+    },
+    header: {
+      type: String,
+      require: true,
+      trim: true,
+      minLength: 10,
+      maxLength: 50,
+    },
+    description: {
+      type: String,
+      require: true,
+      maxLength: 2000,
+      minLength: 10,
+    },
+    category: {
+      type: String,
+      require: true,
+      maxLength: 50,
+      minLength: 10,
+      trim: true,
+    },
+    day: {
+      type: String,
+    },
+    user: {
+      type: String,
+    },
+    id: {
+      type: String,
+    },
   },
-  title: {
-    type: String,
-    require: true,
-    trim: true,
-    maxLength: 50,
-    minLength: 10,
-  },
-  content: {
-    type: String,
-    require: true,
-    minLength: 10,
-  },
-  link: {
-    type: String,
-  },
-  category: {
-    require: true,
-    Type: String,
-  },
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 const post = mongoose.model<blogInterface>("blog", PostSchema);
 
