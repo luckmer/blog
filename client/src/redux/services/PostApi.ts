@@ -9,3 +9,9 @@ export const createPostUser = (request: any) => {
     .then((response) => response.json())
     .then((json) => json);
 };
+
+export const getPostUser = async () => {
+  const posts = await fetch("/user/post");
+
+  if (posts) return posts.json();
+};

@@ -15,7 +15,6 @@ function* userByID(payload: Params) {
   try {
     const userId = payload.ID;
     const response: ResponseGenerator = yield call(fetchByUserId, userId);
-
     delay(1000);
     yield put(UserDataById({ result: response, status: true }));
   } catch (err) {
