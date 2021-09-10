@@ -31,17 +31,21 @@ export interface CHECKPROPS {
 
 export interface ProfileState {
   back: {
+    user: {
+      userByIdStatus: {
+        [key: string]: string;
+      };
+    };
     registration: {
+      _id: string;
       loginStatus: string;
       avatar: string;
       PasswordResult: string;
       PasswordStatus: boolean;
       userStatus: boolean;
+
       userData: {
-        avatar: string;
-        email: string;
-        _id: string;
-        name: string;
+        [key: string]: string;
       };
     };
   };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { CreateRefs, RegistrationForm } from "../../../hooks/index";
 import { sagaActions } from "../../../redux/saga/sagaActions";
+
 import * as Type from "../../Types/FillInterface";
 
 const Firmware = () => {

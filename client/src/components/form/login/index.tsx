@@ -1,5 +1,6 @@
-import * as register from "../../../css/Register.css";
 import { FormPanel } from "../FormPanel";
+
+import * as register from "../../../css/Register.css";
 import Firmware from "./firmware";
 
 const Index = () => {
