@@ -1,8 +1,7 @@
 import { useState, useCallback } from "react";
-
-import { ErrorObj, InputChange } from "../../Types/Types";
-import { sagaActions } from "../../../redux/saga/sagaActions";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { sagaActions } from "../../../redux/saga/sagaActions";
+import { ErrorObj, InputChange } from "../../Types/Types";
 
 import DatePicker from "../../../hooks/DatePicker";
 import ApiImg from "../../../api/ImgApi";
@@ -68,13 +67,16 @@ const Firmware = () => {
   ): ErrorObj => {
     let errors: ErrorObj = {};
 
-    errors["header"] = !header.length ? "header is too short" : "";
+    errors["header"] =
+      !header.length || header.length < 10 ? "header is too short" : "";
 
-    errors["description"] = !description.length
-      ? "description is too short"
-      : "";
+    errors["description"] =
+      !description.length || description.length < 10
+        ? "description is too short"
+        : "";
 
-    errors["category"] = !category.length ? "category is too short" : "";
+    errors["category"] =
+      !category.length || category.length < 10 ? "category is too short" : "";
     return errors;
   };
 

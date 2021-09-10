@@ -1,8 +1,9 @@
-import { useMemo } from "react";
-import * as Small from "../../../css/PostCreator.css";
-import { ShortText } from "./ShortText";
 import { PreviewState } from "../../Types/Types";
+import { ShortText } from "./ShortText";
+import { useMemo } from "react";
+
 import Calendar from "../../Calendar";
+import * as Small from "../../../css/PostCreator.css";
 
 const PreviewPost = ({ imgPreview, header, description }: PreviewState) => {
   const shortHeader = useMemo(
