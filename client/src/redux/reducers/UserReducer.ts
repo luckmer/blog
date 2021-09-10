@@ -15,7 +15,8 @@ const UserSlice = createSlice({
   reducers: {
     UserDataById: (state, action) => {
       const { result, status } = action.payload;
-      if (status) state.userByIdStatus = result.result;
+
+      if (status) state.userByIdStatus = result;
     },
   },
 });

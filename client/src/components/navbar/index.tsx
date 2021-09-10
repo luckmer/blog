@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import * as nav from "../../css/Nav.css";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 import { NavBarState } from "../Types/NavBarState";
 import { PostGenerator } from "./PostGenerator";
 import { LoginPanel } from "./LoginPanel";
+
+import * as nav from "../../css/Nav.css";
 
 const Index = () => {
   const Typed: TypedUseSelectorHook<NavBarState> = useSelector;
