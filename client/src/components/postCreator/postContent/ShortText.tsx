@@ -1,6 +1,7 @@
 import { Fragment, memo } from "react";
-import * as Small from "../../../css/PostCreator.css";
 import { ShortState, ErrorObj } from "../../Types/Types";
+
+import * as Small from "../../../css/PostCreator.css";
 
 const ShortText = memo(({ description }: ShortState) => {
   const maxWidth = 50;

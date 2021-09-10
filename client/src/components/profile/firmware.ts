@@ -17,7 +17,7 @@ const Firmware = () => {
   const { ID }: Type.CHECKPROPS = {
     ID: new URLSearchParams(window.location.search).get("id") || null,
   };
-
+  const multipleState = Typed((state) => state.back.user.userByIdStatus);
   const state = Typed((state) => state.back.registration);
   const user = Typed((state) => state.back.registration?.avatar);
   const { elRefs } = CreateRefs(Constants.arrLength);
@@ -116,6 +116,8 @@ const Firmware = () => {
     state,
     registerTypes,
     descriptions,
+    ID,
+    multipleState,
   };
 };
 export default Firmware;
