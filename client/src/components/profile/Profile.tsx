@@ -1,54 +1,41 @@
-import * as Constants from "../Types/Constants";
-import { FormPanel } from "../form/FormPanel";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { PropsPosts } from "../Types/PropsPosts.types";
+import { UserProfile } from "./UserProfile";
+import { Visitor } from "./Visitor";
+
 import * as P from "../../css/Profile.css";
 import Firmware from "./firmware";
+import { PostPanel } from "./PostPanel";
 
 const Profile = () => {
+  const Typed: TypedUseSelectorHook<PropsPosts> = useSelector;
+  const state = Typed((state) => state.back.posts.posts);
+
   const firmware = Firmware();
+  const id = firmware.ID;
+  const user = firmware.multipleState;
+  const data = firmware.state.userData;
+
+  const postsByUser = state.filter((el) => el.id === id);
 
   return (
     <P.ProfileMain>
       <P.ProfileSpacer>
         <P.UserPanel>
-          <P.UserData>
-            <P.IMG>
-              <img src={firmware.user ? firmware.user : " "} alt="" />
-              <div>
-                <span>
-                  <label htmlFor="file_up">Import</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="file"
-                    id="file_up"
-                    style={{ display: "none" }}
-                    onChange={firmware.handleChangeImg}
-                  />
-                </span>
-              </div>
-            </P.IMG>
-            {FormPanel(
-              firmware.descriptions,
-              firmware.registerTypes,
-              firmware.handleSubmit,
-              firmware.elRefs,
-              Constants.buttonName,
-              Constants.footerDesc,
-              Constants.footerName,
-              firmware.fillForm,
-              2
-            )}
-            <div>
-              {firmware.flag ? <p>{firmware.state.PasswordResult}</p> : ""}
-            </div>
-          </P.UserData>
-          <P.Logout>
-            <P.Btn onClick={firmware.handleLogout}>Logout</P.Btn>
-          </P.Logout>
+          {
+            (user._id,
+            id !== data._id ? (
+              <Visitor firmware={data} />
+            ) : (
+              <UserProfile firmware={firmware} />
+            ))
+          }
         </P.UserPanel>
       </P.ProfileSpacer>
       <P.ProfileSpacer>
-        <div>display user blog</div>
+        <P.PostContainer>
+          <PostPanel postsByUser={postsByUser} />
+        </P.PostContainer>
       </P.ProfileSpacer>
     </P.ProfileMain>
   );
