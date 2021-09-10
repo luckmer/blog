@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import * as register from "../../css/Register.css";
 import { FillInterface } from "../Types/FillInterface";
+
+import * as register from "../../css/Register.css";
 
 export const FormPanel = (
   descriptions: string[],

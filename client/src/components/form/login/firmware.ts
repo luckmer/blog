@@ -3,8 +3,9 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { Move, validateEmail, validatePassword } from "../../../constants";
 import { sagaActions } from "../../../redux/saga/sagaActions";
 import { CreateRefs } from "../../../hooks/index";
-import * as Type from "../../Types/FillInterface";
 import { useHistory } from "react-router";
+
+import * as Type from "../../Types/FillInterface";
 
 function Firmware() {
   const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
