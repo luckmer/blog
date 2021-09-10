@@ -1,3 +1,4 @@
+import { Posts } from "../index";
 import styled from "styled-components";
 
 const MainBlog = styled.section`
@@ -5,7 +6,11 @@ const MainBlog = styled.section`
 `;
 
 const Blog = () => {
-  return <MainBlog>blog</MainBlog>;
+  return (
+    <MainBlog>
+      <Posts />
+    </MainBlog>
+  );
 };
 
 export default Blog;
