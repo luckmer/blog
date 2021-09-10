@@ -157,20 +157,8 @@ const User = async (req: Request, res: Response) => {
 
 const getUserByID = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-
-    const user = await userAuth.findById(id);
-
-    if (user) {
-      const { _id, email, name } = user;
-
-      const userResult = { _id, email, name };
-
-      return res.status(201).json({
-        status: true,
-        result: userResult,
-      });
-    }
+    const user = await userAuth.findById(req.params.id).select("-password");
+    res.json(user);
   } catch (err) {
     return res.status(500).json({
       status: false,

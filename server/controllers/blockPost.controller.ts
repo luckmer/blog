@@ -5,8 +5,8 @@ export const createPost = async (req: Request, res: Response) => {
   try {
     const request = req.body;
 
-    if (request) {
-      await post.create({
+    post
+      .create({
         image: request.image,
         header: request.header,
         description: request.description,
@@ -14,25 +14,39 @@ export const createPost = async (req: Request, res: Response) => {
         day: request.day,
         user: request.user,
         id: request.id,
-      });
-
-      return {
-        status: true,
-        result: "post successfully created",
-      };
-    }
-    return {
-      status: false,
-      result: "please fill empty fields",
-    };
+      })
+      .then(() => {
+        res.json({
+          status: true,
+          result: request,
+        });
+      })
+      .catch(() =>
+        res.status(401).json({
+          status: false,
+          result: "couldn't create post try again later ",
+        })
+      );
   } catch (err) {
     return res.status(500).json({
       status: false,
-      result: "failed to update avatar",
+      result: "failed to create post",
     });
   }
 };
 
-export const getPost = () => {};
+export const getPost = async (req: Request, res: Response) => {
+  if (!post)
+    return res.status(500).json({
+      status: false,
+      result: "couldn't load posts",
+    });
+
+  post.find(function (err, apis) {
+    if (err) return console.error(err);
+    res.status(201).json({ status: true, result: apis });
+  });
+};
+
 export const DeletePost = () => {};
 export const updatePost = () => {};
