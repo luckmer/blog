@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
-import { sagaActions } from "../../redux/saga/sagaActions";
-import { CreateRefs, CreateForm } from "../../hooks/index";
-import * as Constants from "../Types/Constants";
-import * as Type from "../Types/FillInterface";
+import { sagaActions } from "../../../redux/saga/sagaActions";
+import { CreateRefs, CreateForm } from "../../../hooks/index";
 import { useHistory } from "react-router";
-import ApiImg from "../../api/ImgApi";
+
+import * as Constants from "../../Types/Constants";
+import * as Type from "../../Types/FillInterface";
+import ApiImg from "../../../api/ImgApi";
 
 const Firmware = () => {
   const [flag, setFlag] = useState(false);

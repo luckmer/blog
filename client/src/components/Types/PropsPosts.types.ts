@@ -2,6 +2,9 @@ import * as Type from "./FillInterface";
 
 export interface PropsPosts {
   back: {
+    pagination: {
+      [key: string]: number;
+    };
     posts: {
       posts: {
         [key: string]: string;

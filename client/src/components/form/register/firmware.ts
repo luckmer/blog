@@ -33,7 +33,6 @@ const Firmware = () => {
       const value: string = el.current.value;
       return { type: registerTypes[i], value: value };
     });
-    console.log(elRefs);
 
     const formData = RegistrationForm(value);
 

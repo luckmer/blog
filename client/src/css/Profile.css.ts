@@ -15,7 +15,6 @@ export const ProfileMain = styled.section`
 
 export const ProfileSpacer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   padding: 50px 25px;
   justify-content: center;
@@ -121,6 +120,7 @@ export const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  justify-content: space-between;
   padding: 10px;
 `;
 
