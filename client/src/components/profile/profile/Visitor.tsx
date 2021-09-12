@@ -1,6 +1,7 @@
-import * as P from "../../css/Profile.css";
 import { Fragment } from "react";
-import { dataProp } from "../Types/PropsPosts.types";
+import { dataProp } from "../../Types/PropsPosts.types";
+
+import * as P from "../../../css/Profile.css";
 
 export const Visitor = ({ firmware }: { firmware: dataProp }) => {
   const { email, avatar, name } = firmware;

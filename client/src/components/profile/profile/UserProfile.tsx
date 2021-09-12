@@ -1,8 +1,9 @@
-import * as Constants from "../Types/Constants";
-import { Props } from "../Types/PropsPosts.types";
-import { FormPanel } from "../form/FormPanel";
-import * as P from "../../css/Profile.css";
+import { Props } from "../../Types/PropsPosts.types";
+import { FormPanel } from "../../form/FormPanel";
 import { Fragment } from "react";
+
+import * as Constants from "../../Types/Constants";
+import * as P from "../../../css/Profile.css";
 
 export const UserProfile = ({ firmware }: { firmware: Props }) => {
   return (

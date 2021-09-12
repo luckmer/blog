@@ -1,15 +1,18 @@
 import { useSelector, TypedUseSelectorHook } from "react-redux";
-import { PropsPosts } from "../Types/PropsPosts.types";
+import { PropsPosts } from "../../Types/PropsPosts.types";
 import { UserProfile } from "./UserProfile";
+import { PostPanel } from "./PostPanel";
 import { Visitor } from "./Visitor";
 
-import * as P from "../../css/Profile.css";
-import Firmware from "./firmware";
-import { PostPanel } from "./PostPanel";
+import Paginations from "../../Pagination/Paginations";
+import * as P from "../../../css/Profile.css";
+import Firmware from "../firmware/firmware";
 
 const Profile = () => {
   const Typed: TypedUseSelectorHook<PropsPosts> = useSelector;
   const state = Typed((state) => state.back.posts.posts);
+  const pagination = Typed((state) => state.back.pagination);
+  let { page, limit } = pagination;
 
   const firmware = Firmware();
   const id = firmware.ID;
@@ -17,6 +20,17 @@ const Profile = () => {
   const data = firmware.state.userData;
 
   const postsByUser = state.filter((el) => el.id === id);
+
+  const pageNumbers = [];
+
+  const length = page * limit;
+  const indexOfFirst = length - limit;
+  const ItemsForPage = postsByUser.slice(indexOfFirst, length);
+
+  const PageLength = Math.ceil(postsByUser.length / limit);
+  for (let i = 1; i <= PageLength; i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <P.ProfileMain>
@@ -34,7 +48,10 @@ const Profile = () => {
       </P.ProfileSpacer>
       <P.ProfileSpacer>
         <P.PostContainer>
-          <PostPanel postsByUser={postsByUser} />
+          <div>
+            <PostPanel postsByUser={ItemsForPage} />
+          </div>
+          <Paginations pageNumbers={pageNumbers} />
         </P.PostContainer>
       </P.ProfileSpacer>
     </P.ProfileMain>
