@@ -98,7 +98,6 @@ export const Footer = styled.footer`
     text-decoration: none;
     cursor: pointer;
   }
-
   span {
     color: red;
     font-weight: bold;
