@@ -5,7 +5,12 @@ import { Link } from "react-router-dom";
 
 import * as P from "../../../css/Profile.css";
 
-export const PostPanel = ({ postsByUser }: { postsByUser: dataProp[] }) => {
+interface Props {
+  postsByUser: dataProp[];
+  Update: boolean;
+}
+
+export const PostPanel = ({ postsByUser, Update }: Props) => {
   return (
     <Fragment>
       {postsByUser.map((post, i) => (
@@ -25,7 +30,7 @@ export const PostPanel = ({ postsByUser }: { postsByUser: dataProp[] }) => {
               </P.BreakP>
             </div>
             <P.CardDesc>
-              <Link to="">Update Post</Link>
+              {Update ? "" : <Link to="">Update Post</Link>}
               <small>{post.day}</small>
             </P.CardDesc>
           </P.CardPanel>

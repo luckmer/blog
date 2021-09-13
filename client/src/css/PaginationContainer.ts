@@ -46,5 +46,6 @@ export const ActiveBtn = styled.button<Props>`
   transition: all 0.5s;
   background-color: ${({ active }) => (active ? "#23272b" : "#fff")};
   color: ${({ active }) => (active ? "#fff" : "#23272b")};
-  border: none;
+  border: 1px solid #00000066;
+  border-radius: 5px;
 `;
