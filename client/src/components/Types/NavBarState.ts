@@ -15,4 +15,5 @@ export interface NavBarState {
 export interface postState {
   id: string;
   avatar: string;
+  MenuControl: () => void;
 }
