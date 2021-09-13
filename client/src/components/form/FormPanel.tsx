@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { FillInterface } from "../Types/FillInterface";
 
@@ -39,10 +39,15 @@ export const FormPanel = (
           <register.PHeader>{descriptions.pop()}</register.PHeader>
           {secondHalf.map((el, i) => {
             const ref: any = elRefs[i + jump];
+
             return (
               <register.FormContent key={el}>
                 <register.FormLabel htmlFor={el}>{el}</register.FormLabel>
-                <register.FormInput placeholder={el} ref={ref} />
+                <register.FormInput
+                  placeholder={el}
+                  ref={ref}
+                  type="password"
+                />
                 {smallInformation(fillForm, ref)}
               </register.FormContent>
             );
