@@ -18,6 +18,7 @@ const Profile = () => {
   const id = firmware.ID;
   const user = firmware.multipleState;
   const data = firmware.state.userData;
+  const userId = firmware.userById;
 
   const postsByUser = state.filter((el) => el.id === id);
 
@@ -39,7 +40,7 @@ const Profile = () => {
           {
             (user._id,
             id !== data._id ? (
-              <Visitor firmware={data} />
+              <Visitor firmware={userId} />
             ) : (
               <UserProfile firmware={firmware} />
             ))
@@ -49,7 +50,7 @@ const Profile = () => {
       <P.ProfileSpacer>
         <P.PostContainer>
           <div>
-            <PostPanel postsByUser={ItemsForPage} />
+            <PostPanel postsByUser={ItemsForPage} Update={id !== data._id} />
           </div>
           <Paginations pageNumbers={pageNumbers} />
         </P.PostContainer>

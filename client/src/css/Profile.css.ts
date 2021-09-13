@@ -38,7 +38,6 @@ export const Btn = styled.button`
   margin: 2px;
   background-color: red;
   border: none;
-  width: 20%;
   padding: 0.5rem;
   border-radius: 5px;
   cursor: pointer;
@@ -126,10 +125,17 @@ export const PostContainer = styled.div`
 
 export const Card = styled.div`
   display: flex;
-  border: 1px solid #ddd;
   padding: 0.5rem !important;
+  border: 1px solid #ddd;
   margin-bottom: 10px;
-  flex-direction: row;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Img = styled.img`
@@ -140,10 +146,11 @@ export const Img = styled.img`
 `;
 
 export const ImgDiv = styled.div`
+  height: 100%;
   max-height: 170px;
   overflow: hidden;
   flex: 0 0 33.333333%;
-  max-width: 33.333333%;
+  object-fit: cover;
 `;
 
 export const BreakP = styled.p`
