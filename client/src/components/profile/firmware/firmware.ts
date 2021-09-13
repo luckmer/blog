@@ -18,13 +18,18 @@ const Firmware = () => {
   const { ID }: Type.CHECKPROPS = {
     ID: new URLSearchParams(window.location.search).get("id") || null,
   };
+
   const multipleState = Typed((state) => state.back.user.userByIdStatus);
-  const state = Typed((state) => state.back.registration);
+  const userById = Typed((state) => state.back.user.userByIdStatus);
   const user = Typed((state) => state.back.registration?.avatar);
+  const state = Typed((state) => state.back.registration);
   const { elRefs } = CreateRefs(Constants.arrLength);
 
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const registerTypes = ["Name", "Email", "Password", "Confirm Password"];
+  const descriptions = ["modify password", "modify data"];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,9 +108,6 @@ const Firmware = () => {
     if (!user || !user.email || !user.name) history.push("/");
   }, [state.userData, history, state]);
 
-  const registerTypes = ["Name", "Email", "Password", "Confirm Password"];
-  const descriptions = ["modify password", "modify data"];
-
   return {
     handleChangeImg,
     handleLogout,
@@ -119,6 +121,7 @@ const Firmware = () => {
     descriptions,
     ID,
     multipleState,
+    userById,
   };
 };
 export default Firmware;
