@@ -6,7 +6,6 @@ import Api from "./redux/services/Api";
 
 const Main = styled.main`
   display: flex;
-  justify-content: center;
   flex-direction: column;
 `;
 
