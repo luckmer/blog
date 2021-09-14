@@ -2,8 +2,8 @@ const uniqCategoryFilter = (categories: string[]) => {
   const category = new Set();
 
   const checkCategory = (element: string) => {
-    if (category.has(element)) return false;
-    category.add(element);
+    if (category.has(element.toLowerCase())) return false;
+    category.add(element.toLowerCase());
     return true;
   };
 
