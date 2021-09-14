@@ -34,7 +34,6 @@ export const IMGPreview = styled.div`
   }
 `;
 export const PreviewPanel = styled.div`
-  width: 100%;
   margin-left: 15px;
   border-radius: 5px;
   min-height: 100px;
@@ -69,6 +68,8 @@ export const Main = styled.section`
   flex-direction: column;
   padding-top: 20px;
   margin: auto;
+
+  padding: 20px 20px 50px 20px;
 `;
 export const H1 = styled.h1`
   font-weight: 500;
@@ -80,6 +81,7 @@ export const H1 = styled.h1`
 `;
 export const Content = styled.div`
   display: flex;
+  flex-direction: column-reverse;
 `;
 export const Spacer = styled.div`
   width: 100%;

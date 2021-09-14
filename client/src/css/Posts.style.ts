@@ -53,11 +53,13 @@ export const Card = styled.div`
   }
 `;
 export const UniquePost = styled.div`
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-gap: 10px;
+  margin-bottom: 15px;
 
-  @media screen and (max-width: 519px) {
-    justify-content: center;
+  @media screen and (max-width: 530px) {
+    place-items: center;
   }
 `;
 export const TextSplit = styled.div`
