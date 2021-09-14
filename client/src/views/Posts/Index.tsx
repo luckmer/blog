@@ -24,26 +24,28 @@ const Index = () => {
   return (
     <P.Section>
       {uniqCategory.map((el, i) => {
-        const postByUniqData = state
-          .filter((post) => post.category.trim() === el.trim())
-          .slice(0, 5);
+        const postByUniqData = state.filter(
+          (post) =>
+            post.category.trim().toLowerCase().toString() ===
+            el.trim().toLowerCase().toString()
+        );
 
         return (
           <P.PostsContainer key={i}>
             <P.PostsCategory>
               <P.H3>
-                <Link to="/">
+                <Link to={`/categories/${el}?id=${el}&check=`}>
                   {el}
                   <P.Small>( {postByUniqData.length} )</P.Small>
                 </Link>
               </P.H3>
               <P.UniquePost>
-                {postByUniqData.map((el, i) => (
+                {postByUniqData.slice(0, 4).map((el, i) => (
                   <P.Card key={i}>
                     <img src={el.image} alt="" />
                     <P.TextSplit>
                       <div>
-                        <Link to="/">
+                        <Link to={`/details/${el.id}?id=${el.id}&check=`}>
                           <P.P>
                             <ShortText description={el.header} />
                           </P.P>
@@ -64,7 +66,7 @@ const Index = () => {
               </P.UniquePost>
             </P.PostsCategory>
             <P.More>
-              <Link to="/">
+              <Link to={`/categories/${el}?id=${el}&check=`}>
                 <small>read more &gt;&gt; </small>
               </Link>
             </P.More>
