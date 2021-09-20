@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as P from "../../css/Posts.style";
 import { ShortText } from "../../components/postCreator/postContent/ShortText";
 import Paginations from "../../components/Pagination/Paginations";
+import { Link } from "react-router-dom";
 
 interface Props {
   ID: string | number | any;
@@ -17,28 +18,6 @@ interface Props {
     };
   };
 }
-
-const Section = styled.section`
-  max-width: 1140px;
-  margin: auto;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-`;
-
-const Spacer = styled.div`
-  width: 100%;
-  height: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  grid-gap: 10px;
-  margin-bottom: 15px;
-  padding: 0 15px 0 15px;
-  @media screen and (max-width: 565px) {
-    place-items: center;
-  }
-`;
 
 const Index = () => {
   const Typed: TypedUseSelectorHook<Props> = useSelector;
@@ -73,15 +52,19 @@ const Index = () => {
             <img src={el.image} alt="" />
             <P.TextSplit>
               <div>
-                <P.P>
-                  <ShortText description={el.header} />
-                </P.P>
+                <Link to={`/details/${el._id}?id=${el._id}&check=`}>
+                  <P.P>
+                    <ShortText description={el.header} />
+                  </P.P>
+                </Link>
                 <small>
                   <ShortText description={el.description} />
                 </small>
               </div>
               <P.Footer>
-                <small>By:{el.user}</small>
+                <Link to={`/profile/${el.id}?id=${el.id}&check=`}>
+                  <small>By:{el.user}</small>
+                </Link>
                 <small>{el.day}</small>
               </P.Footer>
             </P.TextSplit>
@@ -94,3 +77,25 @@ const Index = () => {
 };
 
 export default Index;
+
+const Section = styled.section`
+  max-width: 1140px;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+
+const Spacer = styled.div`
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-gap: 10px;
+  margin-bottom: 15px;
+  padding: 0 15px 0 15px;
+  @media screen and (max-width: 565px) {
+    place-items: center;
+  }
+`;
