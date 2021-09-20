@@ -115,6 +115,7 @@ const Firmware = () => {
             user: state.email,
             id: state._id,
           };
+
           dispatch({ type: sagaActions.CREATE_POST, createPost });
         }
         handleCancel();
