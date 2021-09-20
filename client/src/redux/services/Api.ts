@@ -12,6 +12,10 @@ const Api = () => {
   useEffect(() => {
     dispatch({ type: sagaActions.BLOG_POSTS_DISPLAY });
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: sagaActions.GET_COMMENTS });
+  }, [dispatch]);
 };
 
 export default Api;
