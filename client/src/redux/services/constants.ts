@@ -19,3 +19,12 @@ export const globalPutParameter = (data: DataS | File) => {
     body: JSON.stringify(data),
   };
 };
+
+export const globalDeleteParameter = () => {
+  return {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  };
+};

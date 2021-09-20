@@ -1,10 +1,15 @@
 export interface Params {
+  ids: {
+    [key: string]: string;
+  };
   data: {
     data: {
       confirm: string;
       email: string;
       name: string;
       password: string;
+      avatar?: string;
+      _id?: string;
     };
     id: string;
   };

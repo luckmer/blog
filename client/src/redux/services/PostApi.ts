@@ -1,4 +1,4 @@
-import { globalPostParameter } from "./constants";
+import { globalDeleteParameter, globalPostParameter } from "./constants";
 
 export const createPostUser = (request: any) => {
   const data = request;
@@ -14,4 +14,12 @@ export const getPostUser = async () => {
   const posts = await fetch("/user/post");
 
   if (posts) return posts.json();
+};
+
+export const fetchDeletePost = (id: string) => {
+  const deleteMethod = globalDeleteParameter();
+
+  return fetch(`/user/deletePost/${id}`, deleteMethod)
+    .then((response) => response.json())
+    .then((json) => json);
 };
