@@ -33,6 +33,10 @@ const Profile = () => {
     pageNumbers.push(i);
   }
 
+  if (!user) {
+    return <p>loading...</p>;
+  }
+
   return (
     <P.ProfileMain>
       <P.ProfileSpacer>

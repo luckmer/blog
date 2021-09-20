@@ -20,7 +20,7 @@ export const PostPanel = ({ postsByUser, Update }: Props) => {
           </P.ImgDiv>
           <P.CardPanel>
             <div>
-              <Link to="/">
+              <Link to={`/details/${post._id}?id=${post._id}&check=`}>
                 <P.BreakP>
                   <ShortText description={post.header} />
                 </P.BreakP>

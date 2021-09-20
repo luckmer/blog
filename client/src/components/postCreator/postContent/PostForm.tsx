@@ -48,7 +48,7 @@ const PostForm = (
       placeholder="description"
       name="description"
       onChange={handleChange}
-      maxLength={2000}
+      minLength={2000}
       value={TextPreview["description"]}
     />
     {SmallDesc(description, Errors, "description")}

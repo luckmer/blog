@@ -23,6 +23,8 @@ const Firmware = () => {
   const userById = Typed((state) => state.back.user.userByIdStatus);
   const user = Typed((state) => state.back.registration?.avatar);
   const state = Typed((state) => state.back.registration);
+  const test = Typed((state) => state.back.user);
+
   const { elRefs } = CreateRefs(Constants.arrLength);
 
   const history = useHistory();
