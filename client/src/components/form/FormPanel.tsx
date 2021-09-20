@@ -46,6 +46,7 @@ export const FormPanel = (
                 <register.FormInput
                   placeholder={el}
                   ref={ref}
+                  autoComplete=""
                   type="password"
                 />
                 {smallInformation(fillForm, ref)}
