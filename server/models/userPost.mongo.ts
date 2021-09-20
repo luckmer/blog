@@ -1,13 +1,7 @@
 import mongoose from "mongoose";
 
 interface blogInterface {
-  image: string;
-  header: string;
-  description: string;
-  category: string;
-  day: string;
-  user: string;
-  id: string;
+  [key: string]: string;
 }
 
 const PostSchema = new mongoose.Schema(
@@ -26,8 +20,6 @@ const PostSchema = new mongoose.Schema(
     description: {
       type: String,
       require: true,
-      maxLength: 2000,
-      minLength: 10,
     },
     category: {
       type: String,

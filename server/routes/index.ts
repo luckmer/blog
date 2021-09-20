@@ -23,6 +23,6 @@ router.get("/logout", Logout);
 
 router.put("/change/:id", oAuthUpdateProfile);
 router.delete("/delete", oAuthDeleteAccount);
-router.put("/avatar", oAuthUpdateAvatar); // off
+router.put("/avatar", oAuthUpdateAvatar);
 
 export default router;

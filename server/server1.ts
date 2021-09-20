@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import blogRoutes from "./routes/blogPost";
+import commentRoutes from "./routes/comments";
 import { PORT } from "./CONNECTION_URL";
 import cookieParser from "cookie-parser";
 import formData from "express-form-data";
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(formData.parse());
 app.use("/user", routes);
 app.use("/user", blogRoutes);
+app.use("/user", commentRoutes);
 
 import "./config/database";
 

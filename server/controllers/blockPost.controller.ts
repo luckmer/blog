@@ -48,5 +48,13 @@ export const getPost = async (req: Request, res: Response) => {
   });
 };
 
-export const DeletePost = () => {};
+export const DeletePost = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  if (!id) return;
+
+  await post.findByIdAndDelete(id);
+
+  return res.status(201).json({ status: true, result: id });
+};
 export const updatePost = () => {};
