@@ -1,25 +1,28 @@
 import { globalDeleteParameter, globalPostParameter } from "./constants";
 
-export const createPostUser = (request: any) => {
+export const createPostUser = async (request: any) => {
   const data = request;
 
   const parameters = globalPostParameter(data);
 
-  return fetch("/user/create", parameters)
-    .then((response) => response.json())
-    .then((json) => json);
+  const response = await fetch("/user/create", parameters);
+  const json = await response.json();
+
+  return json;
 };
 
 export const getPostUser = async () => {
-  const posts = await fetch("/user/post");
+  const response = await fetch("/user/post");
+  const json = response.json();
 
-  if (posts) return posts.json();
+  if (json) return json;
 };
 
-export const fetchDeletePost = (id: string) => {
+export const fetchDeletePost = async (id: string) => {
   const deleteMethod = globalDeleteParameter();
 
-  return fetch(`/user/deletePost/${id}`, deleteMethod)
-    .then((response) => response.json())
-    .then((json) => json);
+  const response = await fetch(`/user/deletePost/${id}`, deleteMethod);
+  const json = await response.json();
+
+  return json;
 };

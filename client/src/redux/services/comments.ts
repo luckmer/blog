@@ -1,24 +1,27 @@
 import { Params } from "./../types/Params";
 import { globalPostParameter, globalDeleteParameter } from "./constants";
 
-export const fetchPostComment = (data: Params) => {
+export const fetchPostComment = async (data: Params) => {
   const parameters = globalPostParameter(data);
 
-  return fetch("/user/createUserComment", parameters)
-    .then((response) => response.json())
-    .then((json) => json);
+  const response = await fetch("/user/createUserComment", parameters);
+  const json = await response.json();
+
+  return json;
 };
 
-export const getComments = () => {
-  return fetch("/user/comments")
-    .then((response) => response.json())
-    .then((json) => json);
+export const getComments = async () => {
+  const response = await fetch("/user/comments");
+  const json = await response.json();
+
+  return json;
 };
 
-export const fetchDeleteComment = (id: string) => {
+export const fetchDeleteComment = async (id: string) => {
   const deleteMethod = globalDeleteParameter();
 
-  return fetch(`/user/deleteUserComment/${id}`, deleteMethod)
-    .then((response) => response.json())
-    .then((json) => json);
+  const response = await fetch(`/user/deleteUserComment/${id}`, deleteMethod);
+  const json = await response.json();
+
+  return json;
 };
