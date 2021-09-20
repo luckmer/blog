@@ -45,7 +45,7 @@ const Index = () => {
                     <img src={el.image} alt="" />
                     <P.TextSplit>
                       <div>
-                        <Link to={`/details/${el.id}?id=${el.id}&check=`}>
+                        <Link to={`/details/${el._id}?id=${el._id}&check=`}>
                           <P.P>
                             <ShortText description={el.header} />
                           </P.P>
