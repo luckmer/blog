@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 interface uAuth {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
+  [key: string]: string;
 }
 
 const userSchema = new mongoose.Schema({

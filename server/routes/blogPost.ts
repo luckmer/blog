@@ -11,6 +11,6 @@ const blogRoutes = express.Router();
 blogRoutes.post("/create", createPost);
 blogRoutes.get("/post", getPost);
 blogRoutes.put("/updatePost", updatePost);
-blogRoutes.delete("/deletePost", DeletePost);
+blogRoutes.delete("/deletePost/:id", DeletePost);
 
 export default blogRoutes;
