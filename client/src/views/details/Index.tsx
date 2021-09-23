@@ -44,8 +44,8 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
       <D.Footer>
         {post.id === firmware.userProfile._id ? (
           <C.ControlPanel>
-            <button onClick={firmware.handleDelete}>Delete</button>
-            <button>Update</button>
+            <C.Button onClick={firmware.handleDelete}>Delete</C.Button>
+            <C.Button>Update</C.Button>
           </C.ControlPanel>
         ) : (
           ""

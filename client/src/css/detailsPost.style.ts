@@ -9,6 +9,7 @@ export const Section = styled.section`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  padding-bottom: 100px;
 `;
 export const H1 = styled.h1`
   margin-bottom: 0.5rem;
@@ -44,6 +45,7 @@ export const P = styled.p`
 `;
 export const Footer = styled.footer`
   border-top: 1px solid #ddd;
+  margin-bottom: 10px;
 `;
 export const FooterH1 = styled.h1`
   padding: 10px;
