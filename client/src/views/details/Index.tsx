@@ -1,4 +1,6 @@
 import { RouteComponentProps } from "react-router-dom";
+import { sagaActions } from "../../redux/saga/sagaActions";
+import { useDispatch } from "react-redux";
 import { PostPanel } from "./PostPanel";
 import { Comments } from "./Comments";
 
@@ -6,18 +8,38 @@ import * as D from "../../css/detailsPost.style";
 import * as C from "../../css/ControlPanel.style";
 import Firmware from "./Firmware";
 
+interface Prop {
+  [key: string]: string;
+}
+
 const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
   const firmware = Firmware({ match });
-
+  const dispatch = useDispatch();
   const post = firmware.post;
 
-  if (!post) {
-    return <D.Section>loading...</D.Section>;
-  }
+  if (!post) return <D.Section>loading...</D.Section>;
 
   const commentsByArticle = firmware.comments.filter(
     (el) => el.id === firmware.id
   );
+
+  const handleDesignPost = (props: Prop) => {
+    if (!props) return;
+
+    switch (props.option) {
+      case "delete":
+        dispatch({ type: sagaActions.DELETE_UNIQUE_COMMENT, props });
+        break;
+      case "reply":
+        dispatch({ type: sagaActions.REPLY_COMMENT, props });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleUpdateComment = (props: Prop) =>
+    props ? dispatch({ type: sagaActions.UPDATE_COMMENT, props }) : "";
 
   return (
     <D.Section>
@@ -60,7 +82,7 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
           Errors={firmware.Errors}
         />
       </D.Footer>
-      {Comments(commentsByArticle)}
+      {Comments(commentsByArticle, handleDesignPost, handleUpdateComment)}
     </D.Section>
   );
 };

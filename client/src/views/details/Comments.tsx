@@ -2,27 +2,29 @@ import { ChangeEvent, FormEvent, Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import * as C from "../../css/ControlPanel.style";
 
+type HandleType = (props: {
+  id: string;
+  option?: string;
+  post?: string;
+}) => void;
+
 interface Props {
   el: {
     [key: string]: string;
   };
-  handleDesignPost: (id: string, option: string) => void;
-  handleUpdateComment: (props: { post: string; id: string }) => void;
+  handleDesignPost: HandleType;
+  handleUpdateComment: HandleType;
 }
 
 interface Prop {
   [key: string]: string;
 }
 
-export const Comments = (commentsByArticle: { [key: string]: string }[]) => {
-  const handleDesignPost = (id: string, option: string) => {
-    console.log(id, option);
-  };
-
-  const handleUpdateComment = (props: Prop) => {
-    console.log(props);
-  };
-
+export const Comments = (
+  commentsByArticle: { [key: string]: string }[],
+  handleDesignPost: HandleType,
+  handleUpdateComment: HandleType
+) => {
   return (
     <C.CommentsPanel>
       {commentsByArticle.map((el, i) => (
@@ -110,14 +112,18 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
           <p>{el.post}</p>
         </div>
         <C.CommentPanel>
-          <C.Button onClick={() => handleDesignPost(el.id, "reply")}>
+          <C.Button
+            onClick={() => handleDesignPost({ id: el.id, option: "reply" })}
+          >
             --reply--
           </C.Button>
           <small>{dayResult}</small>
         </C.CommentPanel>
         <C.Algin>
           <C.Button onClick={() => handleSetMode()}>update</C.Button>
-          <C.Button onClick={() => handleDesignPost(el.id, "delete")}>
+          <C.Button
+            onClick={() => handleDesignPost({ id: el.id, option: "delete" })}
+          >
             delete
           </C.Button>
         </C.Algin>

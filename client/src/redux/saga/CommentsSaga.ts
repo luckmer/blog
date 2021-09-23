@@ -45,7 +45,7 @@ function* postComment(request: Params) {
   } catch (err) {}
 }
 
-function* deleteComment(request: Params) {
+function* deleteComments(request: Params) {
   try {
     const response: ResponseGenerator = yield call(
       fetchDeleteComment,
@@ -59,8 +59,23 @@ function* deleteComment(request: Params) {
   }
 }
 
+function* deleteComment(request: Params) {
+  try {
+    console.log(request);
+    yield delay(1000);
+  } catch (err) {}
+}
+
 function* updateComment(request: Params) {
   try {
+    console.log(request);
+    yield delay(1000);
+  } catch (err) {}
+}
+
+function* replyComment(request: Params) {
+  try {
+    console.log(request);
     yield delay(1000);
   } catch (err) {}
 }
@@ -68,8 +83,10 @@ function* updateComment(request: Params) {
 function* SagaComments() {
   yield takeEvery(sagaActions.GET_COMMENTS, getComment);
   yield takeLatest(sagaActions.POST_COMMENT, postComment);
-  yield takeLatest(sagaActions.DELETE_COMMENT, deleteComment);
+  yield takeLatest(sagaActions.DELETE_COMMENT, deleteComments);
   yield takeLatest(sagaActions.UPDATE_COMMENT, updateComment);
+  yield takeLatest(sagaActions.DELETE_UNIQUE_COMMENT, deleteComment);
+  yield takeLatest(sagaActions.REPLY_COMMENT, replyComment);
 }
 
 export default SagaComments;
