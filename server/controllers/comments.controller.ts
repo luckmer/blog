@@ -48,8 +48,6 @@ export const replyUserComment = (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const response = req.body;
-
-    console.log(id, response);
   } catch (err) {
     console.error(err);
     return res
@@ -82,6 +80,8 @@ export const updateUserComment = async (req: Request, res: Response) => {
     const updateResponse = { post };
 
     await commentAuth.findOneAndUpdate({ _id: id }, updateResponse);
+
+    return res.status(201).json({ status: true, result: response });
   } catch (err) {
     console.error(err);
     return res
@@ -93,6 +93,7 @@ export const updateUserComment = async (req: Request, res: Response) => {
 export const deleteUniqueComment = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
     await commentAuth.findByIdAndDelete({ _id: id });
 
     return res.status(201).json({ status: true, result: id });
