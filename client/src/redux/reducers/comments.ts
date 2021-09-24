@@ -37,6 +37,25 @@ const CommentsSlice = createSlice({
       state.comments = index;
     },
 
+    DeleteComment: (state, action) => {
+      const id = action.payload;
+      const index = state.comments.filter((el) => el._id !== id);
+      state.comments = index;
+    },
+    UpdatePost: (state, action) => {
+      const response = action.payload;
+      if (!response) return;
+
+      const find = state.comments.map((el) => {
+        if (el._id === response.id) {
+          return { ...el, post: response.post };
+        }
+        return el;
+      });
+
+      state.comments = find;
+    },
+
     DeleteError: (state, action) => {
       const err = action.payload;
       if (err) {
@@ -54,6 +73,8 @@ export const {
   DeleteComments,
   UpdateComments,
   DeleteError,
+  DeleteComment,
+  UpdatePost,
 } = CommentsSlice.actions;
 
 export default CommentsSlice.reducer;
