@@ -69,6 +69,8 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
     const newPost = { post: postValue, id };
 
     handleUpdateComment(newPost);
+    setEditing(false);
+    setPostValue("");
   };
 
   const displayUpdateComment = (
