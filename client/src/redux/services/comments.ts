@@ -1,5 +1,9 @@
 import { Params } from "./../types/Params";
-import { globalPostParameter, globalDeleteParameter } from "./constants";
+import {
+  globalPostParameter,
+  globalDeleteParameter,
+  globalPutParameter,
+} from "./constants";
 
 export const fetchPostComment = async (data: Params) => {
   const parameters = globalPostParameter(data);
@@ -25,3 +29,36 @@ export const fetchDeleteComment = async (id: string) => {
 
   return json;
 };
+
+export const fetchDeleteUniqueComment = async (id: string) => {
+  const deleteMethod = globalDeleteParameter();
+
+  const response = await fetch(`/user/deleteUniqueComment/${id}`, deleteMethod);
+  const json = await response.json();
+
+  return json;
+};
+
+interface Test {
+  type: string;
+  ID: string;
+  data: {};
+}
+
+export const fetchUpdateUniqueComment = async ({
+  id,
+  post,
+}: {
+  id: string;
+  post: string;
+}) => {
+  const data = { id, post };
+  const updateMethod = globalPutParameter(data);
+
+  const response = await fetch(`/user/updateUserComment/${id}`, updateMethod);
+  const json = response.json();
+
+  return json;
+};
+
+export const fetchReplyUniqueComment = async (id: string) => {};

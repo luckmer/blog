@@ -12,7 +12,7 @@ export const globalPostParameter = (data: Params) => {
 
 export const globalPutParameter = (data: DataS | File) => {
   return {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },

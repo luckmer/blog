@@ -1,13 +1,15 @@
-import { takeLatest, call, takeEvery, put } from "redux-saga/effects";
-import { ResponseGenerator } from "./../types/ResponseGenerator";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { delay } from "./../constants/delay";
-import { sagaActions } from "./sagaActions";
 import { Params } from "./../types/Params";
+import { ResponseGenerator } from "./../types/ResponseGenerator";
+import { sagaActions } from "./sagaActions";
 
 import {
   fetchPostComment,
   getComments,
   fetchDeleteComment,
+  fetchDeleteUniqueComment,
+  fetchUpdateUniqueComment,
 } from "./../services/comments";
 
 import {
@@ -19,7 +21,8 @@ import {
 
 interface Posts {
   result: {
-    [key: string]: string;
+    id: string;
+    post: string;
   };
 }
 
@@ -61,21 +64,41 @@ function* deleteComments(request: Params) {
 
 function* deleteComment(request: Params) {
   try {
-    console.log(request);
+    if (!request.props) return;
+    const id = request.props.id;
+
+    const response: ResponseGenerator = yield call(
+      fetchDeleteUniqueComment,
+      id
+    );
+
     yield delay(1000);
   } catch (err) {}
 }
 
+interface Test {
+  id: string;
+  post: string;
+}
+
 function* updateComment(request: Params) {
   try {
-    console.log(request);
+    const updateData = request.props;
+    if (!updateData) return;
+
+    const { id, post } = updateData;
+
+    const response: ResponseGenerator = yield call(fetchUpdateUniqueComment, {
+      id,
+      post,
+    });
+
     yield delay(1000);
   } catch (err) {}
 }
 
 function* replyComment(request: Params) {
   try {
-    console.log(request);
     yield delay(1000);
   } catch (err) {}
 }

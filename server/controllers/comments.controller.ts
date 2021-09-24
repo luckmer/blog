@@ -60,6 +60,17 @@ export const deleteUserComment = async (req: Request, res: Response) => {
 export const updateUserComment = (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    console.log("comment update", id);
+  } catch (err) {
+    return res.status(501).json("process failed");
+  }
+};
+
+export const deleteUniqueComment = (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) return;
   } catch (err) {
     return res.status(501).json("process failed");
   }

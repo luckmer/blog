@@ -2,6 +2,9 @@ export interface Params {
   ids: {
     [key: string]: string;
   };
+  props: {
+    [key: string]: string;
+  };
   data: {
     data: {
       confirm: string;
@@ -25,10 +28,12 @@ export interface Params {
 }
 
 export interface DataS {
-  confirm: string;
-  email: string;
-  name: string;
-  password: string;
+  id?: string;
+  post?: string;
+  confirm?: string;
+  email?: string;
+  name?: string;
+  password?: string;
 }
 
 export interface AvatarState {
