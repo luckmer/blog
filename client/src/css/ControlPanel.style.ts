@@ -100,17 +100,23 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 
+  div {
+    width: 60%;
+  }
+
   @media screen and (min-width: 500px) {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
   }
 `;
+
 export const Input = styled.input`
   margin-left: 10px;
   border: none;
   border-radius: 5px;
   padding: 10px;
   width: 100%;
-  background-color: #6fc67c;
+  background-color: #fff;
+  border: 1px solid grey;
 `;

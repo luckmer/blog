@@ -83,11 +83,6 @@ function* deleteComment(request: Params) {
   } catch (err) {}
 }
 
-interface Test {
-  id: string;
-  post: string;
-}
-
 function* updateComment(request: Params) {
   try {
     const updateData = request.props;
