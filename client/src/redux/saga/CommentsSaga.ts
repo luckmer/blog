@@ -17,7 +17,9 @@ import {
   CreateComments,
   DeleteComments,
   DeleteError,
+  DeleteComment,
   DisplayComments,
+  UpdatePost,
 } from "../reducers/comments";
 
 interface Posts {
@@ -73,6 +75,10 @@ function* deleteComment(request: Params) {
       id
     );
 
+    if (response.status) {
+      yield put(DeleteComment(response.result));
+    }
+
     yield delay(1000);
   } catch (err) {}
 }
@@ -93,6 +99,10 @@ function* updateComment(request: Params) {
       id,
       post,
     });
+
+    if (response.status) {
+      yield put(UpdatePost(response.result));
+    }
 
     yield delay(1000);
   } catch (err) {}
