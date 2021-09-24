@@ -80,7 +80,7 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
         </Link>
       </C.CommentsUser>
       <C.CommentSpacer>
-        <C.Form onSubmit={(e) => handleSubmit(e, el.id)}>
+        <C.Form onSubmit={(e) => handleSubmit(e, el._id)}>
           <div>
             <C.Input
               type="text"
@@ -115,7 +115,7 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
         <C.CommentPanel>
           <C.Button
             onClick={() =>
-              handleDesignPost({ id: el.id, option: "reply", user: el.email })
+              handleDesignPost({ id: el._id, option: "reply", user: el.email })
             }
           >
             --reply--
@@ -125,7 +125,7 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
         <C.Algin>
           <C.Button onClick={() => handleSetMode()}>update</C.Button>
           <C.Button
-            onClick={() => handleDesignPost({ id: el.id, option: "delete" })}
+            onClick={() => handleDesignPost({ id: el._id, option: "delete" })}
           >
             delete
           </C.Button>

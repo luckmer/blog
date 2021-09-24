@@ -44,7 +44,19 @@ export const createUserComment = (req: Request, res: Response) => {
   }
 };
 
-export const replyUserComment = (req: Request, res: Response) => {};
+export const replyUserComment = (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const response = req.body;
+
+    console.log(id, response);
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(501)
+      .json({ status: false, result: "couldn't reply post" });
+  }
+};
 
 export const deleteUserComment = async (req: Request, res: Response) => {
   try {
@@ -53,25 +65,41 @@ export const deleteUserComment = async (req: Request, res: Response) => {
 
     return res.status(201).json({ status: true, result: id });
   } catch (err) {
-    return res.status(501).json("process failed");
+    console.error(err);
+    return res
+      .status(501)
+      .json({ status: false, result: "couldn't delete comment" });
   }
 };
 
-export const updateUserComment = (req: Request, res: Response) => {
+export const updateUserComment = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log("comment update", id);
-  } catch (err) {
-    return res.status(501).json("process failed");
-  }
-};
-
-export const deleteUniqueComment = (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-
+    const response = req.body;
     if (!id) return;
+
+    const post = response.post;
+    const updateResponse = { post };
+
+    await commentAuth.findOneAndUpdate({ _id: id }, updateResponse);
   } catch (err) {
-    return res.status(501).json("process failed");
+    console.error(err);
+    return res
+      .status(501)
+      .json({ status: false, result: "couldn't update comment" });
+  }
+};
+
+export const deleteUniqueComment = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await commentAuth.findByIdAndDelete({ _id: id });
+
+    return res.status(201).json({ status: true, result: id });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(501)
+      .json({ status: false, result: "couldn't delete unique comment " });
   }
 };
