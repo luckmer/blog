@@ -6,6 +6,7 @@ type HandleType = (props: {
   id: string;
   option?: string;
   post?: string;
+  user?: string;
 }) => void;
 
 interface Props {
@@ -113,7 +114,9 @@ const CommentsMap = ({ el, handleDesignPost, handleUpdateComment }: Props) => {
         </div>
         <C.CommentPanel>
           <C.Button
-            onClick={() => handleDesignPost({ id: el.id, option: "reply" })}
+            onClick={() =>
+              handleDesignPost({ id: el.id, option: "reply", user: el.email })
+            }
           >
             --reply--
           </C.Button>

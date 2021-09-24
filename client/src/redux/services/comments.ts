@@ -39,12 +39,6 @@ export const fetchDeleteUniqueComment = async (id: string) => {
   return json;
 };
 
-interface Test {
-  type: string;
-  ID: string;
-  data: {};
-}
-
 export const fetchUpdateUniqueComment = async ({
   id,
   post,
@@ -61,4 +55,17 @@ export const fetchUpdateUniqueComment = async ({
   return json;
 };
 
-export const fetchReplyUniqueComment = async (id: string) => {};
+export const fetchReplyUniqueComment = async ({
+  id,
+  user,
+}: {
+  id: string;
+  user: string;
+}) => {
+  const data = { id, user };
+  const updateMethod = globalPutParameter(data);
+  const response = await fetch(`/user/replyUserComment/${id}`, updateMethod);
+  const json = response.json();
+
+  return json;
+};
