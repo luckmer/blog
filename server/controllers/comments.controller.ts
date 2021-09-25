@@ -22,32 +22,48 @@ export const getUserComments = (req: Request, res: Response) => {
   }
 };
 
-export const createUserComment = (req: Request, res: Response) => {
+export const createUserComment = async (req: Request, res: Response) => {
   try {
     const request = req.body;
 
     const deleteID = removeProperty("_id", request);
 
-    commentAuth
-      .create({ ...deleteID })
-      .then(() => {
-        res.json({ status: true, result: request });
-      })
-      .catch(() => {
-        return res.status(303).json({
-          status: false,
-          result: "couldn't create post try again later",
-        });
-      });
+    const newComment = await commentAuth.create({ ...deleteID });
+
+    if (!newComment) {
+      return res
+        .status(301)
+        .json({ status: false, result: "couldn't create comment" });
+    }
+
+    return res.status(201).json({ status: true, result: newComment });
   } catch (err) {
     return res.status(501).json("process failed");
   }
 };
 
-export const replyUserComment = (req: Request, res: Response) => {
+export const replyUserComment = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
     const response = req.body;
+
+    if (!response) return;
+
+    const result = await commentAuth.create({
+      email: response.user,
+      reply: response.post,
+      replyEmail: response.user,
+      id: response.id,
+      avatar: response.avatar,
+      replyBy: response.replyBy,
+      replyData: response.replyData,
+      replyUserEmail: response.replyEmail,
+    });
+
+    if (!result) {
+      return res.status(301).json({ status: false, result: "couldn't  reply" });
+    }
+
+    return res.status(201).json({ status: true, result: response });
   } catch (err) {
     console.error(err);
     return res
