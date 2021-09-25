@@ -106,15 +106,12 @@ function* updateComment(request: Params) {
 function* replyComment(request: Params) {
   try {
     const replyData = request.props;
-    const { id, user } = replyData;
-
-    if (!user || !id) return;
 
     const response: ResponseGenerator = yield call(fetchReplyUniqueComment, {
-      id,
-      user,
+      replyData,
     });
 
+    yield put(CreateComments(response));
     yield delay(1000);
   } catch (err) {}
 }

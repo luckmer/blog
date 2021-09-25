@@ -39,3 +39,30 @@ export interface PropPanel {
   handleChange: (e: InputChange) => void;
   Errors: ErrorObj | undefined;
 }
+
+export type HandleType = (props: {
+  id: string;
+  option?: string;
+  post?: string;
+  user?: string;
+}) => void;
+
+export interface PropsS {
+  userReplyAvatar: {
+    [key: string]: string;
+  };
+  status: boolean;
+  comments: {
+    [key: string]: string;
+  }[];
+  el: {
+    [key: string]: string;
+  };
+
+  handleDesignPost: HandleType;
+  handleUpdateComment: HandleType;
+}
+
+export interface Prop {
+  [key: string]: string;
+}

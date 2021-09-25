@@ -39,6 +39,12 @@ export const fetchDeleteUniqueComment = async (id: string) => {
   return json;
 };
 
+interface Props {
+  replyData: {
+    [key: string]: string;
+  };
+}
+
 export const fetchUpdateUniqueComment = async ({
   id,
   post,
@@ -55,16 +61,11 @@ export const fetchUpdateUniqueComment = async ({
   return json;
 };
 
-export const fetchReplyUniqueComment = async ({
-  id,
-  user,
-}: {
-  id: string;
-  user: string;
-}) => {
-  const data = { id, user };
-  const updateMethod = globalPutParameter(data);
-  const response = await fetch(`/user/replyUserComment/${id}`, updateMethod);
+export const fetchReplyUniqueComment = async ({ replyData }: Props) => {
+  const updateMethod = globalPostParameter(replyData as any);
+
+  const response = await fetch(`/user/replyUserComment`, updateMethod);
+
   const json = response.json();
 
   return json;

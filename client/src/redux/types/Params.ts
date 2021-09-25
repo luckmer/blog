@@ -28,12 +28,13 @@ export interface Params {
 }
 
 export interface DataS {
-  id?: string;
-  post?: string;
   confirm?: string;
   email?: string;
   name?: string;
   password?: string;
+
+  id?: string;
+  post?: string;
 }
 
 export interface AvatarState {
