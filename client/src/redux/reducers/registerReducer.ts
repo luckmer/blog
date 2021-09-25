@@ -39,6 +39,7 @@ const RegisterReducer = createSlice({
       const { status, result, Data } = action.payload;
       state.loginStatus = status;
       state.loginResult = result;
+      state.userStatus = status;
 
       if (Data) {
         state.userData = Data;

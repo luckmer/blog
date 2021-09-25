@@ -1,8 +1,8 @@
 import { RouteComponentProps } from "react-router-dom";
 import { sagaActions } from "../../redux/saga/sagaActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { PostPanel } from "./PostPanel";
-import { Comments } from "./Comments";
+import { Comments } from "./comments/Comments";
 
 import * as D from "../../css/detailsPost.style";
 import * as C from "../../css/ControlPanel.style";
@@ -12,12 +12,24 @@ interface Prop {
   [key: string]: string;
 }
 
+interface UserType {
+  back: {
+    registration: {
+      userStatus: boolean;
+    };
+  };
+}
+
 const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
   const firmware = Firmware({ match });
   const dispatch = useDispatch();
   const post = firmware.post;
+  const Typed: TypedUseSelectorHook<UserType> = useSelector;
+  const user = Typed((state) => state.back.registration.userStatus);
 
   if (!post) return <D.Section>loading...</D.Section>;
+
+  const comments = firmware.comments;
 
   const commentsByArticle = firmware.comments.filter(
     (el) => el.id === firmware.id
@@ -38,8 +50,22 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
     }
   };
 
-  const handleUpdateComment = (props: Prop) =>
-    props ? dispatch({ type: sagaActions.UPDATE_COMMENT, props }) : "";
+  const handleUpdateComment = (props: Prop) => {
+    if (!props) return;
+
+    switch (props.mode) {
+      case "form":
+        dispatch({ type: sagaActions.UPDATE_COMMENT, props });
+        break;
+      case "reply":
+        dispatch({ type: sagaActions.REPLY_COMMENT, props });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const userReplyAvatar = firmware.userProfile;
 
   return (
     <D.Section>
@@ -74,15 +100,26 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
         )}
 
         <D.FooterH1>comments</D.FooterH1>
-        <PostPanel
-          userProfile={firmware.userProfile}
-          handleSubmit={firmware.handleSubmit}
-          comment={firmware.comment}
-          handleChange={firmware.handleChange}
-          Errors={firmware.Errors}
-        />
+        {user ? (
+          <PostPanel
+            userProfile={firmware.userProfile}
+            handleSubmit={firmware.handleSubmit}
+            comment={firmware.comment}
+            handleChange={firmware.handleChange}
+            Errors={firmware.Errors}
+          />
+        ) : (
+          ""
+        )}
       </D.Footer>
-      {Comments(commentsByArticle, handleDesignPost, handleUpdateComment)}
+      {Comments(
+        commentsByArticle,
+        handleDesignPost,
+        handleUpdateComment,
+        comments,
+        user,
+        userReplyAvatar
+      )}
     </D.Section>
   );
 };
