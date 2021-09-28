@@ -10,7 +10,7 @@ const blogRoutes = express.Router();
 
 blogRoutes.post("/create", createPost);
 blogRoutes.get("/post", getPost);
-blogRoutes.put("/updatePost", updatePost);
+blogRoutes.patch("/updatePost", updatePost);
 blogRoutes.delete("/deletePost/:id", DeletePost);
 
 export default blogRoutes;
