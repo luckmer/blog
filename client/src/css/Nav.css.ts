@@ -216,6 +216,7 @@ export const MobileNav = styled.div<Props>`
 export const Input = styled.input`
   background-color: transparent;
   border: none;
+  color: white;
   border: 1px solid #ddd;
   width: 100%;
   border-radius: 10px;
