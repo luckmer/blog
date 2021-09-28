@@ -1,5 +1,10 @@
 export interface NavBarState {
   back: {
+    posts: {
+      posts: {
+        [key: string]: string;
+      }[];
+    };
     registration: {
       avatar: string;
       userStatus: boolean;
