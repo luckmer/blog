@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, Fragment } from "react";
 import { Prop } from "../Interfaces";
 import { Link } from "react-router-dom";
 import * as C from "../../../css/ControlPanel.style";
@@ -150,15 +150,22 @@ export const ReplyPanel = ({
               ""
             ) : (
               <C.Algin>
-                <C.Button
-                  onClick={() => handleModeControl("updateComment", el.id)}
-                  id={el.replyID}
-                >
-                  update
-                </C.Button>
-                <C.Button onClick={() => handleDeleteMode("delete")}>
-                  delete
-                </C.Button>
+                {el.email === userReplyAvatar.email ||
+                el.replyBy === userReplyAvatar.email ? (
+                  <Fragment>
+                    <C.Button
+                      onClick={() => handleModeControl("updateComment", el.id)}
+                      id={el.replyID}
+                    >
+                      update
+                    </C.Button>
+                    <C.Button onClick={() => handleDeleteMode("delete")}>
+                      delete
+                    </C.Button>
+                  </Fragment>
+                ) : (
+                  ""
+                )}
               </C.Algin>
             )}
           </div>
