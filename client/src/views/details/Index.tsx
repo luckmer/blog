@@ -12,8 +12,8 @@ import Firmware from "./Firmware";
 
 const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
   const Typed: TypedUseSelectorHook<UserType> = useSelector;
-  const userData = Typed((state) => state.back.registration.userData);
   const user = Typed((state) => state.back.registration.userStatus);
+  const userData = Typed((state) => state.back.registration.userData);
 
   const firmware = Firmware({ match });
   const dispatch = useDispatch();
@@ -83,7 +83,6 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
         {post.id === firmware.userProfile._id ? (
           <C.ControlPanel>
             <C.Button onClick={firmware.handleDelete}>Delete</C.Button>
-            <C.Button>Update</C.Button>
           </C.ControlPanel>
         ) : (
           ""
