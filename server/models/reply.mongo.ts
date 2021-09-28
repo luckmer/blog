@@ -12,8 +12,19 @@ const ReplySchema = new mongoose.Schema(
     replyTo: {
       type: String,
     },
+    avatar: {
+      type: String,
+    },
     replyPost: {
       type: String,
+    },
+    id: {
+      type: String,
+      default: "",
+    },
+    replyID: {
+      type: String,
+      default: "",
     },
   },
   {

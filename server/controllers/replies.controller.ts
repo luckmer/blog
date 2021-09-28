@@ -26,7 +26,16 @@ export const postReplies = async (req: Request, res: Response) => {
   try {
     const response = req.body;
 
-    const postResult = await ReplyModel.create({ ...response });
+    const replyResponse = {
+      replyBy: response.replyEmail,
+      replyTo: response.user,
+      replyPost: response.post,
+      id: response.id,
+      avatar: response.avatar,
+      replyID: response.replyID,
+    };
+
+    const postResult = await ReplyModel.create({ ...replyResponse });
 
     if (!postResult) {
       return res.status(301).json({
@@ -35,11 +44,9 @@ export const postReplies = async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(201).json({
-      status: true,
-      result: postResult,
-    });
+    return res.status(201).json({ status: true, result: postResult });
   } catch (err) {
+    console.log(err);
     return MultipleErr(res, "reply");
   }
 };
@@ -50,7 +57,9 @@ export const updateReplies = async (req: Request, res: Response) => {
 
     if (!id) return;
 
-    const updateMethod = { replyPost: req.body };
+    const { post, replyID } = req.body;
+
+    const updateMethod = { replyPost: post, replyID };
 
     if (!updateMethod) {
       return res.status(301).json({
@@ -59,16 +68,11 @@ export const updateReplies = async (req: Request, res: Response) => {
       });
     }
 
-    const updateResult = await ReplyModel.findByIdAndUpdate(
-      { _id: id },
-      updateMethod
-    );
+    await ReplyModel.findByIdAndUpdate({ _id: id }, updateMethod);
 
-    return res.status(201).json({
-      status: true,
-      result: updateResult,
-    });
+    return res.status(201).json({ status: true, result: req.body });
   } catch (err) {
+    console.log(err);
     return MultipleErr(res, "update");
   }
 };
@@ -82,6 +86,20 @@ export const deleteReplies = async (req: Request, res: Response) => {
     return res.status(201).json({ status: true, result: id });
   } catch (err) {
     return MultipleErr(res, "delete");
+  }
+};
+
+export const deleteMultipleReplies = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await ReplyModel.deleteMany({ id });
+
+    return res.status(201).json({ status: true, result: id });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(501)
+      .json({ status: false, result: "couldn't delete replies" });
   }
 };
 
