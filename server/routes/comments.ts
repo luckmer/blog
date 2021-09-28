@@ -15,6 +15,6 @@ commentRoutes.post("/createUserComment", createUserComment);
 commentRoutes.delete("/deleteUserComment/:id", deleteUserComment);
 commentRoutes.delete("/deleteUniqueComment/:id", deleteUniqueComment);
 commentRoutes.patch("/updateUserComment/:id", updateUserComment);
-commentRoutes.patch("/replyUserComment/:id", replyUserComment);
+commentRoutes.post("/replyUserComment", replyUserComment);
 
 export default commentRoutes;

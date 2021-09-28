@@ -1,11 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import blogRoutes from "./routes/blogPost";
+import replyRoutes from "./routes/ReplyRoutes";
 import commentRoutes from "./routes/comments";
-import { PORT } from "./CONNECTION_URL";
+import blogRoutes from "./routes/blogPost";
 import cookieParser from "cookie-parser";
 import formData from "express-form-data";
+import { PORT } from "./CONNECTION_URL";
 import routes from "./routes/index";
 import express from "express";
 import morgan from "morgan";
@@ -22,6 +23,7 @@ app.use(formData.parse());
 app.use("/user", routes);
 app.use("/user", blogRoutes);
 app.use("/user", commentRoutes);
+app.use("/user", replyRoutes);
 
 import "./config/database";
 
