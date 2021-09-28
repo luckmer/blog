@@ -1,8 +1,8 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { delay } from "./../constants/delay";
-import { Params } from "./../types/Params";
 import { ResponseGenerator } from "./../types/ResponseGenerator";
+import { delay } from "./../constants/delay";
 import { sagaActions } from "./sagaActions";
+import { Params } from "./../types/Params";
 
 import {
   fetchPostComment,
@@ -10,7 +10,6 @@ import {
   fetchDeleteComment,
   fetchDeleteUniqueComment,
   fetchUpdateUniqueComment,
-  fetchReplyUniqueComment,
 } from "./../services/comments";
 
 import {
@@ -103,26 +102,12 @@ function* updateComment(request: Params) {
   } catch (err) {}
 }
 
-function* replyComment(request: Params) {
-  try {
-    const replyData = request.props;
-
-    const response: ResponseGenerator = yield call(fetchReplyUniqueComment, {
-      replyData,
-    });
-
-    yield put(CreateComments(response));
-    yield delay(1000);
-  } catch (err) {}
-}
-
 function* SagaComments() {
   yield takeEvery(sagaActions.GET_COMMENTS, getComment);
   yield takeLatest(sagaActions.POST_COMMENT, postComment);
   yield takeLatest(sagaActions.DELETE_COMMENT, deleteComments);
   yield takeLatest(sagaActions.UPDATE_COMMENT, updateComment);
   yield takeLatest(sagaActions.DELETE_UNIQUE_COMMENT, deleteComment);
-  yield takeLatest(sagaActions.REPLY_COMMENT, replyComment);
 }
 
 export default SagaComments;
