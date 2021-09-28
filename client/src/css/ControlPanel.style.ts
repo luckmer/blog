@@ -1,4 +1,3 @@
-import { fetchPostComment } from "./../redux/services/comments";
 import styled from "styled-components";
 
 export const ControlPanel = styled.div`
@@ -7,9 +6,11 @@ export const ControlPanel = styled.div`
 
 export const CommentPanel = styled.div`
   display: flex;
-
-  width: 100%;
   justify-content: space-between;
+
+  div {
+    width: 100%;
+  }
 `;
 
 export const CommentsUser = styled.div`
@@ -17,7 +18,6 @@ export const CommentsUser = styled.div`
   align-items: center;
   flex-direction: column;
   width: 50px;
-  overflow: hidden;
   text-align: center;
 `;
 
@@ -119,4 +119,16 @@ export const Input = styled.input`
   width: 100%;
   background-color: #fff;
   border: 1px solid grey;
+`;
+
+export const ReplySpacer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const UniqueEmptyImg = styled.div`
+  width: 40px;
+  height: 40px;
+  background-color: #6fc67c;
+  border-radius: 100px;
 `;

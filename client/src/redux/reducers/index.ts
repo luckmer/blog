@@ -4,6 +4,7 @@ import registerReducer from "./registerReducer";
 import UserReducer from "./UserReducer";
 import CommentsSlice from "./comments";
 import PostSlice from "./Posts";
+import ReplySlice from "./reply";
 
 const Index = combineReducers({
   registration: registerReducer,
@@ -11,6 +12,7 @@ const Index = combineReducers({
   user: UserReducer,
   posts: PostSlice,
   comments: CommentsSlice,
+  reply: ReplySlice,
 });
 
 export default Index;
