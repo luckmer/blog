@@ -8,6 +8,11 @@ export interface IdProps {
 
 export interface Props {
   back: {
+    reply: {
+      reply: {
+        [key: string]: string;
+      }[];
+    };
     registration: {
       userData: {
         [key: string]: string;
@@ -48,6 +53,9 @@ export type HandleType = (props: {
 }) => void;
 
 export interface PropsS {
+  replies: {
+    [key: string]: string;
+  }[];
   userReplyAvatar: {
     [key: string]: string;
   };
@@ -65,4 +73,15 @@ export interface PropsS {
 
 export interface Prop {
   [key: string]: string;
+}
+
+export interface UserType {
+  back: {
+    registration: {
+      userStatus: boolean;
+      userData: {
+        [key: string]: string;
+      };
+    };
+  };
 }

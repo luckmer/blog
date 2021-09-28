@@ -1,71 +1,61 @@
-import { RouteComponentProps } from "react-router-dom";
-import { sagaActions } from "../../redux/saga/sagaActions";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import { sagaActions } from "../../redux/saga/sagaActions";
+import { RouteComponentProps } from "react-router-dom";
+import { ReplyPanel } from "./comments/ReplyPanel";
+import { Prop, UserType } from "./Interfaces";
 import { PostPanel } from "./PostPanel";
-import { Comments } from "./comments/Comments";
 
 import * as D from "../../css/detailsPost.style";
 import * as C from "../../css/ControlPanel.style";
+import group from "../../hooks/CreateById";
 import Firmware from "./Firmware";
 
-interface Prop {
-  [key: string]: string;
-}
-
-interface UserType {
-  back: {
-    registration: {
-      userStatus: boolean;
-    };
-  };
-}
-
 const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
+  const Typed: TypedUseSelectorHook<UserType> = useSelector;
+  const userData = Typed((state) => state.back.registration.userData);
+  const user = Typed((state) => state.back.registration.userStatus);
+
   const firmware = Firmware({ match });
   const dispatch = useDispatch();
+
   const post = firmware.post;
-  const Typed: TypedUseSelectorHook<UserType> = useSelector;
-  const user = Typed((state) => state.back.registration.userStatus);
 
   if (!post) return <D.Section>loading...</D.Section>;
 
-  const comments = firmware.comments;
-
-  const commentsByArticle = firmware.comments.filter(
-    (el) => el.id === firmware.id
+  const replies = firmware.reply.map((el) =>
+    el.id ? { ...el, _id: el.id, replyID: el._id } : el
   );
 
-  const handleDesignPost = (props: Prop) => {
-    if (!props) return;
+  const commentsByArticle = firmware.comments.filter((el) => {
+    return el.id === firmware.id;
+  });
 
-    switch (props.option) {
-      case "delete":
-        dispatch({ type: sagaActions.DELETE_UNIQUE_COMMENT, props });
-        break;
-      case "reply":
-        dispatch({ type: sagaActions.REPLY_COMMENT, props });
-        break;
-      default:
-        break;
-    }
-  };
+  const dataByGroup = group([...commentsByArticle, ...replies], "_id");
 
   const handleUpdateComment = (props: Prop) => {
     if (!props) return;
 
     switch (props.mode) {
-      case "form":
-        dispatch({ type: sagaActions.UPDATE_COMMENT, props });
+      case "updateComment":
+        dispatch({ type: sagaActions.UPDATE_COMMENT, props }); // works
+        break;
+      case "updateReply":
+        dispatch({ type: sagaActions.UPDATE_REPLY, props });
         break;
       case "reply":
-        dispatch({ type: sagaActions.REPLY_COMMENT, props });
+        dispatch({ type: sagaActions.POST_REPLY, props });
+        break;
+      case "delete":
+        dispatch({ type: sagaActions.DELETE_UNIQUE_COMMENT, props });
+        dispatch({ type: sagaActions.DELETE_REPLIES, props });
+        break;
+      case "deleteReply":
+        dispatch({ type: sagaActions.DELETE_REPLY, props });
         break;
       default:
         break;
     }
   };
-
-  const userReplyAvatar = firmware.userProfile;
 
   return (
     <D.Section>
@@ -112,14 +102,22 @@ const Index = ({ match }: RouteComponentProps<{ id?: string }>) => {
           ""
         )}
       </D.Footer>
-      {Comments(
-        commentsByArticle,
-        handleDesignPost,
-        handleUpdateComment,
-        comments,
-        user,
-        userReplyAvatar
-      )}
+      {dataByGroup.map((el, index) => {
+        const indexData = el;
+        return (
+          <C.CommentsPanel key={index}>
+            {indexData.map((el: string, index: number) => (
+              <ReplyPanel
+                el={el}
+                key={index}
+                status={user}
+                handleUpdateComment={handleUpdateComment}
+                userReplyAvatar={userData}
+              />
+            ))}
+          </C.CommentsPanel>
+        );
+      })}
     </D.Section>
   );
 };

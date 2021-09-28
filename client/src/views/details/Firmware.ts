@@ -21,6 +21,7 @@ const FirmWare = ({
   const state = Typed((state) => state.back.posts.posts);
   const commentsResponse = Typed((state) => state.back.comments);
   const comments = commentsResponse.comments;
+  const reply = Typed((state) => state.back.reply.reply);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -75,6 +76,7 @@ const FirmWare = ({
     handleChange,
     Errors,
     id,
+    reply,
   };
 };
 
