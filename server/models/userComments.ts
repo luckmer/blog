@@ -21,10 +21,6 @@ const commentSchema = new mongoose.Schema(
     id: {
       type: String,
     },
-    reply: {
-      type: String,
-      default: "",
-    },
   },
   {
     timestamps: true,
