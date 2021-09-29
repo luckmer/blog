@@ -20,6 +20,26 @@ interface Props {
   };
 }
 
+export const DisplayErrorData = (
+  header: string,
+  description: string,
+  category: string
+): ErrorObj => {
+  let errors: ErrorObj = {};
+
+  errors["header"] =
+    !header.length || header.length < 10 ? "header is too short" : "";
+
+  errors["description"] =
+    !description.length || description.length < 10
+      ? "description is too short"
+      : "";
+
+  errors["category"] =
+    !category.length || category.length < 10 ? "category is too short" : "";
+  return errors;
+};
+
 const Firmware = () => {
   const [imgPreview, setImgPreview] = useState<File | undefined>(undefined);
   const [Errors, setErrors] = useState<ErrorObj>();
@@ -59,26 +79,6 @@ const Firmware = () => {
     },
     [TextPreview]
   );
-
-  const DisplayErrorData = (
-    header: string,
-    description: string,
-    category: string
-  ): ErrorObj => {
-    let errors: ErrorObj = {};
-
-    errors["header"] =
-      !header.length || header.length < 10 ? "header is too short" : "";
-
-    errors["description"] =
-      !description.length || description.length < 10
-        ? "description is too short"
-        : "";
-
-    errors["category"] =
-      !category.length || category.length < 10 ? "category is too short" : "";
-    return errors;
-  };
 
   const handleCancel = useCallback(() => {
     const types: string[] = ["header", "description", "category"];

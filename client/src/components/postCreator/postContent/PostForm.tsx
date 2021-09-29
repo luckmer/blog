@@ -23,6 +23,7 @@ const PostForm = (
     <Small.Input
       id="title"
       name="header"
+      role="header"
       type="text"
       maxLength={50}
       onChange={handleChange}
@@ -45,6 +46,7 @@ const PostForm = (
     <Small.Span htmlFor="description">Description</Small.Span>
     <Small.TextArea
       id="description"
+      role="description"
       placeholder="description"
       name="description"
       onChange={handleChange}
@@ -57,6 +59,7 @@ const PostForm = (
       id="category"
       placeholder="category"
       name="category"
+      role="category"
       onChange={handleChange}
       maxLength={50}
       value={TextPreview["category"]}
