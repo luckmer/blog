@@ -5,6 +5,26 @@ import { sagaActions } from "../../../redux/saga/sagaActions";
 
 import * as Type from "../../Types/FillInterface";
 
+interface UtilsType {
+  registerTypes: string[];
+  footerDesc: string;
+  footerName: string;
+  buttonName: string;
+  descriptions: string[];
+}
+
+export const Utility = () => {
+  const utils: UtilsType = {
+    footerDesc: "already have an account ?",
+    buttonName: "register",
+    footerName: "login",
+    registerTypes: ["Name", "Email", "Password", "Confirm Password"],
+    descriptions: ["password", "data"],
+  };
+
+  return { utils };
+};
+
 const Firmware = () => {
   const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
   const state = Typed((state) => state.back.registration);
@@ -12,15 +32,9 @@ const Firmware = () => {
     undefined
   );
 
-  const footerDesc: string = "already have an account ?";
-  const buttonName: string = "register";
-  const footerName: string = "login";
-  const registerTypes: string[] = [
-    "Name",
-    "Email",
-    "Password",
-    "Confirm Password",
-  ];
+  const { utils }: { utils: UtilsType } = Utility();
+  const { registerTypes, footerDesc, footerName, buttonName, descriptions } =
+    utils;
 
   const dispatch = useDispatch();
   const arrLength = registerTypes.length;
@@ -55,7 +69,6 @@ const Firmware = () => {
       );
     }
   };
-  const descriptions = ["password", "data"];
 
   return {
     descriptions,

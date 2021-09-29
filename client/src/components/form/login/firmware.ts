@@ -7,39 +7,59 @@ import { useHistory } from "react-router";
 
 import * as Type from "../../Types/FillInterface";
 
+interface UtilsType {
+  registerTypes: string[];
+  footerDesc: string;
+  footerName: string;
+  buttonName: string;
+  descriptions: string[];
+}
+
+export const createForm = (data: Type.registrationInterface[]) => {
+  const [email, password] = data;
+  const emailReq = validateEmail(email.value);
+  const passwordReq = validatePassword(password.value);
+
+  if (Move(email.value) && Move(password.value) && emailReq && passwordReq) {
+    const Json = {
+      email: email.value,
+      password: password.value,
+    };
+    return { status: true, result: Json };
+  } else {
+    return { status: false, result: "please check your password or email" };
+  }
+};
+
+export const Utility = () => {
+  const utils: UtilsType = {
+    registerTypes: ["Email", "Password"],
+    footerDesc: "You don't have an account?",
+    footerName: "register",
+    buttonName: "Login",
+    descriptions: ["password", "email"],
+  };
+
+  return { utils };
+};
+
 function Firmware() {
   const [fillForm, setFillForm] = useState<Type.FillInterface | undefined>(
     undefined
   );
+
   const Typed: TypedUseSelectorHook<Type.RegisterState> = useSelector;
   const state = Typed((state) => state.back.registration);
   const history = useHistory();
 
-  const registerTypes: string[] = ["Email", "Password"];
-  const footerDesc: string = "You don't have an account?";
-  const footerName: string = "register";
-  const buttonName: string = "Login";
-  const arrLength = registerTypes.length;
+  const { utils }: { utils: UtilsType } = Utility();
+  const { registerTypes, footerDesc, footerName, buttonName, descriptions } =
+    utils;
 
+  const arrLength = registerTypes.length;
   const dispatch = useDispatch();
 
   const { elRefs } = CreateRefs(arrLength);
-
-  const createForm = (data: Type.registrationInterface[]) => {
-    const [email, password] = data;
-    const emailReq = validateEmail(email.value);
-    const passwordReq = validatePassword(password.value);
-
-    if (Move(email.value) && Move(password.value) && emailReq && passwordReq) {
-      const Json = {
-        email: email.value,
-        password: password.value,
-      };
-      return { status: true, result: Json };
-    } else {
-      return { status: false, result: "please check your password or email" };
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,6 +69,7 @@ function Firmware() {
       return { type: registerTypes[i], value: value };
     });
 
+    console.log(value);
     const formData = createForm(value);
 
     const statusForm: Type.FillInterface = {
@@ -69,7 +90,6 @@ function Firmware() {
       }, 100);
     }
   };
-  const descriptions = ["password", "email"];
 
   return {
     descriptions,

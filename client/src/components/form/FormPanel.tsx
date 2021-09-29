@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FillInterface } from "../Types/FillInterface";
 
 import * as register from "../../css/Register.css";
+import { smallInformation } from "./smallInformation";
 
 export const FormPanel = (
   descriptions: string[],
@@ -72,16 +73,3 @@ export const FormPanel = (
     </Fragment>
   );
 };
-
-function smallInformation(fillForm: FillInterface | undefined, ref: any) {
-  return (
-    <register.Small>
-      {fillForm !== undefined &&
-      fillForm.status === false &&
-      ref?.current &&
-      ref.current.value === ""
-        ? "required!"
-        : ""}
-    </register.Small>
-  );
-}
