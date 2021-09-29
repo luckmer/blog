@@ -25,6 +25,7 @@ const PostForm = (
       name="header"
       role="header"
       type="text"
+      aria-label="header"
       maxLength={50}
       onChange={handleChange}
       value={TextPreview["title"]}
@@ -39,6 +40,7 @@ const PostForm = (
       accept="image/*"
       name="file"
       id="file_up"
+      aria-label="file"
       style={{ display: "none" }}
       onChange={ImagePreview}
     />
@@ -49,6 +51,7 @@ const PostForm = (
       role="description"
       placeholder="description"
       name="description"
+      aria-label="description"
       onChange={handleChange}
       minLength={2000}
       value={TextPreview["description"]}
@@ -60,6 +63,7 @@ const PostForm = (
       placeholder="category"
       name="category"
       role="category"
+      aria-label="category"
       onChange={handleChange}
       maxLength={50}
       value={TextPreview["category"]}
@@ -67,7 +71,9 @@ const PostForm = (
     {SmallDesc(category, Errors, "category")}
     <Small.FormStatus>
       <Small.FormButton onClick={handleCancel}>Cancel</Small.FormButton>
-      <Small.FormButton type="submit">&#xd7; Confirm </Small.FormButton>
+      <Small.FormButton type="submit" aria-label="submit">
+        &#xd7; Confirm{" "}
+      </Small.FormButton>
     </Small.FormStatus>
   </Small.Form>
 );
