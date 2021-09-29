@@ -1,4 +1,4 @@
-import { DisplayErrorData } from "./firmware";
+import { DisplayErrorData } from "../firmware";
 
 describe("DisplayErrorData", () => {
   test("incorrect header length", () => {
